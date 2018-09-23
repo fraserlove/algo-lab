@@ -1,5 +1,8 @@
-#Created 12/08/17
+"""
+Created 12/08/17
+Developed by Fraser Love
 #Extra Info - Made on Samsung S4 while in Cassis in France
+"""
 
 import time
 
