@@ -1,2 +1,2 @@
-# python
-All Python Scripts
+# Python Scripts
+All Python Scripts Made By Fraser Love
