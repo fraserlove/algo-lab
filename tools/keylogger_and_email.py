@@ -6,7 +6,7 @@ def func1():
     global message
     email = 'your_email.com'
     password = 'your_password'
-    send_to_email = 'your_email.com'
+    send_to_email = 'target_email.com'
     message = []
 
     session_exit = False
