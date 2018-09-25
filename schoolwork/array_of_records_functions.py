@@ -27,27 +27,27 @@ def out_record(record_array):
             for element in record_array[i]:
                 print(element,"\t\t", end="")
                 
-def query_display(record_array):
+def query_search(record_array):
     print("\n")
     query = input("Enter a city to diplay info on: ")
     for i in range(len(record_array)):
-        if record_array[i][0] == query:
+        if record_array[i][0] == query:             #array[record][value] - value is the value being looked for
             for element in record_array[i]:
-                print(element,"\t\t", end="")
+                print(element,"\t\t", end="")       #Displays all info about matched record
                 
 def record_search(record_array):
     print("\n")
     query = input("Enter a country to diplay info on: ")
     for i in range(len(record_array)):
-        if record_array[i][1] == query:
-            print(record_array[i][0])   
+        if record_array[i][1] == query:             #array[record][value] - value is the value being looked for
+            print(record_array[i][0])               #Displays a value in matched record
 
 def main():
     _len = int(input("How many records will you be entering: "))
     city_array = insert(generate(_len))
     out_record(city_array)
     out_table(city_array)
-    query_display(city_array)
+    query_search(city_array)
     record_search(city_array)
 
 main()
