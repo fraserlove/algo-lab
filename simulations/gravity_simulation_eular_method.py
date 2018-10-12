@@ -10,10 +10,12 @@ Measures the change in velocity and displacement after every time_step
 Euler method assumes constant acceletation throught the whole timestep. This normally doesnt impact on results
 to much but becomes noticible if accceleration rapidly increases like when two objects in close proximity pass by one another
 and can lead to unequal calcualtion of force of gravity and send objects
-spiraling out to infinity. An updatated version will be developed soon using the
-Runge-Kutta method which gives more accurate value not based on a time_step
-This will mean no spiriling to infinity when objects pass in close proximity to eachother and will
-lead to much better results for galaxy formation
+spiraling out to infinity. An updatated version will be developed soon using the 2nd order
+leapfrog integration method which gives more accurate values. This will mean no spiriling to infinity when objects pass in
+close proximity to eachother and will lead to much better results for galaxy formation
+
+The Euler method is sympletic meaning that the orbit should stay stable. A small enough time_step
+will ensure that the acceleration is measured as accurate as possible and will lead to a stable orbit.
 
 Every frame:
 - Calculate the weight of each object to every other object
