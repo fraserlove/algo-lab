@@ -15,7 +15,7 @@ This will mean no spiriling to infinity when objects pass in close proximity to 
 lead to much better results for galaxy formation
 
 Every frame:
-- Calculate the weight of each object to every other object with
+- Calculate the weight of each object to every other object
 - Reslove the weight vector into x and y magnitudes
 - Use Euler method to update velocity and position with the time_step
 - Check if particles have collided and if so use conservation of momentum to update new particles mass and velocity
