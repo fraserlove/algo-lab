@@ -7,8 +7,9 @@ Simulating the force of gravity on cellestial bodies using Newtons laws,
 with the Euler Method of Integration.
 Measures the change in velocity and displacement after every time_step
 
-Euler method becomes less accurate when velocities increase, close proximity
-passes can lead to unequal calcualtion of force of gravity and send objects
+Euler method assumes constant acceletation throught the whole timestep. This normally doesnt impact on results
+to much but becomes noticible if accceleration rapidly increases like when two objects in close proximity pass by one another
+and can lead to unequal calcualtion of force of gravity and send objects
 spiraling out to infinity. An updatated version will be developed soon using the
 Runge-Kutta method which gives more accurate value not based on a time_step
 This will mean no spiriling to infinity when objects pass in close proximity to eachother and will
