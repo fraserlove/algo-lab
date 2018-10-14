@@ -1,19 +1,19 @@
 # Python Scripts
 All Python Scripts Made By Fraser Love
 
-  # Simulations
+  ## Simulations
   Computer models and simulations of Hamltonian and complex systems
   Includes:
     - Gravity Simulation
     - Solar System Simulation
    
-  # Cellular Automata
+  ## Cellular Automata
   Mathematical systems used to represent cellular life
   Includes:
     - Conways Game of Life
     - Predator and Prey
     
-  # Tools
+  ## Tools
   General purpose programs designed to carry out a specific task
   Includes:
     - Decimal to Binary Convertor
