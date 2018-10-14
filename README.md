@@ -26,3 +26,7 @@ All Python Scripts Made By Fraser Love
     - Random Text File Generator
     - Prime Number Search
     
+- 1
+- 2
+- 3
+    
