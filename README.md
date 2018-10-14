@@ -16,17 +16,13 @@ All Python Scripts Made By Fraser Love
   ## Tools
   General purpose programs designed to carry out a specific task
   Includes:
-    - Decimal to Binary Convertor
-    - Email Spam Tool
-    - File Spam Tool
-    - Flipped Number Search
-    - Remote Keylogger with Feedback
-    - Password Generator
-    - Random Binary File Generator
-    - Random Text File Generator
-    - Prime Number Search
-    
-- 1
-- 2
-- 3
-    
+  - Decimal to Binary Convertor
+  - Email Spam Tool
+  - File Spam Tool
+  - Flipped Number Search
+  - Remote Keylogger with Feedback
+  - Password Generator
+  - Random Binary File Generator
+  - Random Text File Generator
+  - Prime Number Search
+   
