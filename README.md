@@ -15,6 +15,7 @@ All Python Scripts Made By Fraser Love
     
   ## Tools
   General purpose programs designed to carry out a specific task
+  
   Includes:
   - Decimal to Binary Convertor
   - Email Spam Tool
