@@ -1,5 +1,5 @@
 # Python Scripts
-Python Scripts Developed By Fraser Love.
+Python Scripts Developed By Fraser Love. I am currently developing new simulations of Hamltonian System, mainly a Quntum Physics probablility calculator.
 
 ## Simulations
 Computer models and simulations of Hamltonian and complex systems
