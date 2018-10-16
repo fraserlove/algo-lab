@@ -1,5 +1,5 @@
 # Python Scripts
-All Python Scripts Made By Fraser Love
+Python Scripts Developed By Fraser Love.
 
 ## Simulations
 Computer models and simulations of Hamltonian and complex systems
