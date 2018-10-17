@@ -16,6 +16,7 @@ Mathematical systems used to represent cellular life
 
 - Conways Game of Life
 - Predator and Prey
+- Wire World
     
 ## Tools
 General purpose programs designed to carry out a specific task
