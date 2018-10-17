@@ -35,7 +35,7 @@ from pygame.locals import *
 initial_objects = 200   # Number of initial objects in the simulation
 object_list = []
 G = 6.67408e-11         # Gravitational constant
-time_step = 4320       # How much time has passed between every calculation - (lower more accurate)
+time_step = 4320        # How much time has passed between every calculation - (lower more accurate)
 frame_rate = 20         # time passed in sim = current time * time_step * frame_rate
 trails = []             # List to store trail objects
 trail_len = 100         # Sets the length of the planet trails
