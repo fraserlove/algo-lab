@@ -52,8 +52,8 @@ class MassObject:
         self.mass = mass                # In kg
         self.x_pos = x_pos              # In m from sun
         self.y_pos = y_pos              # In m from sun
-        self.x_velocity = x_vel         # In m/s
-        self.y_velocity = y_vel         # In m/s
+        self.x_velocity = x_vel         # In km/s
+        self.y_velocity = y_vel         # In km/s
         self.colour = colour
 
 def setup(object_list):
