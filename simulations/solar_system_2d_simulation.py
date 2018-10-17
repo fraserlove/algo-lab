@@ -31,11 +31,12 @@ import random, pygame, sys, math, time
 from math import sqrt
 from pygame.locals import *
 
+# Variables set so in simulation 1 second = 1 day
 initial_objects = 200   # Number of initial objects in the simulation
 object_list = []
 G = 6.67408e-11         # Gravitational constant
-time_step = 50000       # How much time has passed between every calculation - (lower more accurate)
-frame_rate = 60
+time_step = 4320       # How much time has passed between every calculation - (lower more accurate)
+frame_rate = 20         # time passed in sim = current time * time_step * frame_rate
 trails = []             # List to store trail objects
 trail_len = 100         # Sets the length of the planet trails
 
@@ -68,7 +69,6 @@ def setup(object_list):
     #object_list.append(MassObject("Neptune", 1e26, x_mid, 4.5e12, 5477, 0, (255, 255, 145)))
     object_list.append(MassObject("Rocket", 2000, x_mid, 1.5e11, 30000, 8000, (255, 255, 255)))
 
-
 def furthest(object_list):
     for object in object_list:
         max = object.y_pos
@@ -80,10 +80,11 @@ def add_force(object):
     x_acc = y_acc = 0.0
     for other in object_list:
         if other != object and object.x_pos - other.x_pos != 0:
-            r = sqrt((object.x_pos - other.x_pos)**2 + (object.y_pos - other.y_pos)**2)
-            fg = (G * other.mass)/ r**3
-            x_acc += fg * (other.x_pos - object.x_pos)
-            y_acc += fg * (other.y_pos - object.y_pos)
+            r = ((other.x_pos - object.x_pos)**2) + ((other.y_pos - object.y_pos)**2)
+            fg = G * object.mass * other.mass / r
+            angle = math.atan2((other.y_pos - object.y_pos), (other.x_pos - object.x_pos))
+            x_acc += fg * math.cos(angle) / object.mass
+            y_acc += fg * math.sin(angle) / object.mass
     return x_acc, y_acc
 
 def update_pos(object_list):
@@ -117,7 +118,7 @@ def main():
     r_furthest = furthest(object_list)
     step = 1
     while True:
-        pygame.display.set_caption('Gravity Simulation: Step {}  SimulationTime(s): {} RealTime: {}  Objects: {}'.format(str(step), time_step * math.floor(time.time() - start_time), round(time.time() - start_time,2), len(object_list)))
+        pygame.display.set_caption('Gravity Simulation: Step {}  SimulationTime(s): {} RealTime: {}  Objects: {}'.format(str(step), round(round(time.time() - start_time,2)* time_step * frame_rate,2), round(time.time() - start_time,2), len(object_list)))
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit(); sys.exit();
