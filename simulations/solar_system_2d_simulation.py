@@ -31,12 +31,12 @@ import random, pygame, sys, math, time
 from math import sqrt
 from pygame.locals import *
 
-# Variables set so in simulation 1 second = 1 day
+# Variables set so in simulation 1 second = 10 days
 initial_objects = 200   # Number of initial objects in the simulation
 object_list = []
 G = 6.67408e-11         # Gravitational constant
-time_step = 4320        # How much time has passed between every calculation - (lower more accurate)
-frame_rate = 20         # time passed in sim = current time * time_step * frame_rate
+time_step = 28800       # How much time has passed between every calculation - (lower more accurate)
+frame_rate = 30         # time passed in sim = current time * time_step * frame_rate
 trails = []             # List to store trail objects
 trail_len = 100         # Sets the length of the planet trails
 
@@ -47,7 +47,7 @@ clock = pygame.time.Clock()
 start_time = time.time()
 
 class MassObject:
-    def __init__(self, name, mass, x_pos, y_pos, x_vel, y_vel, colour):
+    def __init__(self, name, mass, x_pos, y_pos, x_vel, y_vel, colour, radius):
         self.name = name
         self.mass = mass                # In kg
         self.x_pos = x_pos              # In m from sun
@@ -55,19 +55,20 @@ class MassObject:
         self.x_velocity = x_vel         # In km/s
         self.y_velocity = y_vel         # In km/s
         self.colour = colour
+        self.radius = radius
 
 def setup(object_list):
     x_mid = 6.25e10
-    object_list.append(MassObject("Sun", 2e30, x_mid, 0, 0, 0, (255, 255, 0)))
-    object_list.append(MassObject("Mercuary", 3.285e23, x_mid, 5.7e10, 47000, 0, (0, 255, 255)))
-    object_list.append(MassObject("Venus", 4.8e24, x_mid, 1.1e11, 35000, 0, (0, 255, 0)))
-    object_list.append(MassObject("Earth", 6e24, x_mid, 1.5e11, 30000, 0, (0, 0, 255)))
-    object_list.append(MassObject("Mars", 2.4e24, x_mid, 2.2e11, 24000, 0, (255, 0, 0)))
+    object_list.append(MassObject("Sun", 2e30, x_mid, 0, 0, 0, (255, 255, 0), 10))
+    object_list.append(MassObject("Mercuary", 3.285e23, x_mid, 5.7e10, 47000, 0, (0, 255, 255), 2))
+    object_list.append(MassObject("Venus", 4.8e24, x_mid, 1.1e11, 35000, 0, (0, 255, 0), 4))
+    object_list.append(MassObject("Earth", 6e24, x_mid, 1.5e11, 30000, 0, (0, 0, 255), 4))
+    object_list.append(MassObject("Mars", 2.4e24, x_mid, 2.2e11, 24000, 0, (255, 0, 0), 3))
     #object_list.append(MassObject("Jupiter", 1e28, x_mid, 7.7e11, 13000, 0, (255, 255, 0)))
     #object_list.append(MassObject("Saturn", 5.7e26, x_mid, 1.4e12, 9000, 0, (255, 145, 0)))
     #object_list.append(MassObject("Uranus", 8.7e25, x_mid, 2.8e12, 6835, 0, (145, 255, 0)))
     #object_list.append(MassObject("Neptune", 1e26, x_mid, 4.5e12, 5477, 0, (255, 255, 145)))
-    object_list.append(MassObject("Rocket", 2000, x_mid, 1.5e11, 30000, 8000, (255, 255, 255)))
+    object_list.append(MassObject("Rocket", 2000, x_mid, 1.5e11, 30000, 8000, (255, 255, 255), 1))
 
 def furthest(object_list):
     for object in object_list:
@@ -101,8 +102,8 @@ def create_trails(object_list):
 
 def draw(object_list, r_furthest):
     for object in object_list:
-        pygame.draw.circle(display, object.colour, (int((200 * object.x_pos / r_furthest)) + 550, int((200 * object.y_pos / r_furthest)) + 350), 4, 0)
-        trails[object_list.index(object)].append((display, object.colour, (int((200 * object.x_pos / r_furthest)) + 550, int((200 * object.y_pos / r_furthest)) + 350), 4, 0))
+        pygame.draw.circle(display, object.colour, (int((220 * object.x_pos / r_furthest)) + 550, int((220 * object.y_pos / r_furthest)) + 350), object.radius, 0)
+        trails[object_list.index(object)].append((display, object.colour, (int((220 * object.x_pos / r_furthest)) + 550, int((220 * object.y_pos / r_furthest)) + 350), object.radius, 0))
     for trail in trails:
         for element in trail:
             if len(trail) > 0 and trail.index(element) > 0:
