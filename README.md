@@ -24,8 +24,8 @@ General purpose programs designed to carry out a specific task
 ### Includes:
 
 - Decimal to Binary Convertor
-- Email Spam Tool
-- File Spam Tool
+- Email Creator
+- File Creator
 - Flipped Number Search
 - Remote Keylogger with Feedback
 - Password Generator
