@@ -1,6 +1,6 @@
 """
 Wire World Cellular Automaton
-Developed by Fraser Love on 16/10/18
+Developed by Fraser Love on 04/10/18
 Dependencies: Pygame
 Ran on CPU - Reccomended to use on High-Range CPU
 Controls:
@@ -16,13 +16,12 @@ grid_size = (160, 160)              # Sets the size of the grid
 spacing = 0                         # Sets space between each cell
 cell_size = 8                       # Sets the drawn size of each cell
 frame_rate = 100
-generation = 0
 pointer_size = 0.8                  # Sets the size of mouse pointer
-start_time = time.time()
 
 def initialise():
     pygame.init()
     display = pygame.display.set_mode((grid_size[0]*(cell_size+spacing)-spacing, grid_size[1]*(cell_size+spacing)-spacing))
+    pygame.display.set_caption('Predator and Prey: Controls - WASD to Move, SPACE to select cells, ENTER to confirm')
     display.fill(pygame.Color("black"))
     clock = pygame.time.Clock()
     cells = [[0 for x in range(grid_size[1])] for y in range(grid_size[0])]
@@ -109,8 +108,9 @@ def new_cells(cells):
                 new[j][i] = 1
     return new
 
-def draw(display, new):
+def draw(display, new, generation, start_time):
     display.fill(pygame.Color("black"))
+    pygame.display.set_caption('Predator and Prey: Generation {}  Time: {}  AverageFPS: {}'.format(str(generation), round(time.time() - start_time,2), round(generation/round(time.time() - start_time,2),2)))
     for j in range(grid_size[1]):
         for i in range(grid_size[0]):
             if new[j][i] == 1:
@@ -128,13 +128,16 @@ def update_cells(new, cells):
     return cells
 
 def game_loop(display, clock, cells):
+    start_time = time.time()
+    generation = 0
     while True:
+        generation += 1
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit(); sys.exit();
         new = new_cells(cells)
         cells = update_cells(new, cells)
-        draw(display, new)
+        draw(display, new, generation, start_time)
         clock.tick(frame_rate)
 
 def main():
