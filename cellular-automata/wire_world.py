@@ -8,7 +8,7 @@ Controls:
  - SPACE to select
  - ENTER to confirm
 """
-import pygame, sys, random, time
+import pygame, sys, time
 from pygame.locals import *
 
 session = True
