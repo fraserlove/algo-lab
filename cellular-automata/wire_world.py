@@ -21,7 +21,7 @@ pointer_size = 0.8                  # Sets the size of mouse pointer
 def initialise():
     pygame.init()
     display = pygame.display.set_mode((grid_size[0]*(cell_size+spacing)-spacing, grid_size[1]*(cell_size+spacing)-spacing))
-    pygame.display.set_caption('Predator and Prey: Controls - WASD to Move, SPACE to select cells, ENTER to confirm')
+    pygame.display.set_caption('Wire World: Controls - WASD to Move, SPACE to select cells, ENTER to confirm')
     display.fill(pygame.Color("black"))
     clock = pygame.time.Clock()
     cells = [[0 for x in range(grid_size[1])] for y in range(grid_size[0])]
@@ -110,7 +110,7 @@ def new_cells(cells):
 
 def draw(display, new, generation, start_time):
     display.fill(pygame.Color("black"))
-    pygame.display.set_caption('Predator and Prey: Generation {}  Time: {}  AverageFPS: {}'.format(str(generation), round(time.time() - start_time,2), round(generation/round(time.time() - start_time,2),2)))
+    pygame.display.set_caption('Wire World: Generation {}  Time: {}  AverageFPS: {}'.format(str(generation), round(time.time() - start_time,2), round(generation/round(time.time() - start_time,2),2)))
     for j in range(grid_size[1]):
         for i in range(grid_size[0]):
             if new[j][i] == 1:
