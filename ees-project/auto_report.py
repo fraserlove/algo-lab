@@ -10,6 +10,7 @@ Features
 - Stylish GUI
 - Hashed passwords for extra security
 - Extra UI robustness enhancements
+- Automatic email of reports
 """
 
 from tkinter import *
