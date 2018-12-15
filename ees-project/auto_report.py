@@ -11,7 +11,7 @@ Features
 """
 
 from tkinter import *
-import datetime, csv, os, time
+import datetime, csv, os, time, hashlib, uuid
 
 def initalise_app():
     root = Tk()
@@ -21,14 +21,9 @@ def initalise_app():
 def close_window():
     root.destroy()
 
-def get_entries(form_id, time_now, name, issue, enteredText):
-    file = open("data.csv", "a", newline="")
-    writer = csv.writer(file, delimiter=",", quotechar='"', quoting=csv.QUOTE_ALL)
-    writer.writerow([form_id, time_now, name, issue, enteredText])
-    print("Appended: {} {} {} {}".format(form_id, time_now, name, issue, enteredText))
-    file.close()
-
 def root_screen(root):
+    tries = 3
+    locked = True
     def background(root):
         background = Frame(root, bg="#212121", width = 1920, height = 1080)
         title = Label(background, text="Auto Report System", bg="#212121", fg="white", font=('Segoe UI', '24', 'bold'))
@@ -61,9 +56,21 @@ def root_screen(root):
         def destroy_widgit(widgit):
             widgit.destroy()
 
-        def submitted_form(page, form_id):
-            submit_text = Label(page, text=" FORM ID {}: SUCESSFULLY SUBMITTED".format(form_id), bg="#161616", fg="white", font=('Segoe UI', '10'))
-            submit_text.place(x=690, y=580)
+        def get_entries(page, form_id, time_now, name, issue, enteredText):
+            if locked == False:
+                file = open("data.csv", "a", newline="")
+                writer = csv.writer(file, delimiter=",", quotechar='"', quoting=csv.QUOTE_ALL)
+                writer.writerow([form_id, time_now, name, issue, enteredText])
+                print("Appended: {} {} {} {}".format(form_id, time_now, name, issue, enteredText))
+                file.close()
+                submit_display(page, "FORM ID {}: SUCESSFULLY SUBMITTED".format(gen_id()-1), "white")
+            if locked == True:
+                submit_display(page, "ERROR: FORM NOT SUBMITTED, YOU ARE NOT LOGGED IN", "red")
+
+
+        def submit_display(page, string, colour):
+            submit_text = Label(page, text=string, bg="#161616", fg=colour, font=('Segoe UI', '10'))
+            submit_text.place(x=920, y=595, anchor="e")
             submit_text.after(2500, destroy_widgit, submit_text)
 
         def collect_time(page):
@@ -109,7 +116,7 @@ def root_screen(root):
             return description
 
         def submit_setup(page, time_now, name, issue, description):
-            submitButton = Button(page, text="Submit", fg="white", bg="#474747", borderwidth=0, height = 1, width = 10, activebackground="#333333", activeforeground="white", command=lambda:[get_entries(gen_id(), time_now, name.get(), issue.get(), description.get("1.0",END)), submitted_form(page, gen_id()-1)], font=('Segoe UI', '15'))
+            submitButton = Button(page, text="Submit", fg="white", bg="#474747", borderwidth=0, height = 1, width = 10, activebackground="#333333", activeforeground="white", command=lambda:get_entries(page, gen_id(), time_now, name.get(), issue.get(), description.get("1.0",END)), font=('Segoe UI', '15'))
             submitButton.place(x=800, y=530)
 
         def report_head(page):
@@ -120,15 +127,42 @@ def root_screen(root):
             login_header = Label(page, text="LOGIN", bg="#161616", fg="white", font=('Segoe UI', '18', 'bold'))
             login_header.place(x=1440, y=30, anchor="center")
 
-        def sign_in(username, password):
-            file = open("credentials.txt", "r")# Stored on server
-            for line in file:
-                values = line.split(",")
-                values[1] = values[1][:2]
-                if username == values[0] and password == values[1]:
-                    print("Unlocked")
+        def hash_password(password):
+            hash_object = hashlib.sha256(password.encode())
+            hex_dig = hash_object.hexdigest()
+            return hex_dig
+
+        def sign_in(page, username, password, username_text, password_text, username_input, password_input, login_button):
+            nonlocal tries, locked
+            file = open("credentials.txt", "r") # Stored on server
+            if tries > 0 and locked == True:
+                for line in file:
+                    values = line.split(",")
+                    hashed_password = values[1][:64]
+                    if username == values[0] and hash_password(password) == hashed_password:
+                        locked = False
+                        destroy_widgit(username_text)
+                        destroy_widgit(username_input)
+                        destroy_widgit(password_text)
+                        destroy_widgit(password_input)
+                        destroy_widgit(login_button)
                 else:
-                    print("Locked")
+                    tries -= 1
+            if locked == True:
+                tries_text = Label(page, text="Incorrect Username: {} Tries Left".format(tries), bg="#161616", fg="white", font=('Segoe UI', '10'))
+                tries_text.place(x=1355, y=183, anchor="w")
+                tries_text.after(2000, destroy_widgit, tries_text)
+            if locked == False:
+                tries_text = Label(page, text="SUCESSFULLY LOGGED IN", bg="#161616", fg="white", font=('Segoe UI', '10'))
+                tries_text.place(x=1440, y=100, anchor="center")
+                welcome_text = Label(page, text="Welcome {}".format(username), bg="#161616", fg="white", font=('Segoe UI', '20'))
+                about_text = Label(page, text="Enter values for each field then press submit", bg="#161616", fg="white", font=('Segoe UI', '15'))
+                welcome_text.place(x=1440, y=200, anchor="center")
+                about_text.place(x=1440, y=250, anchor="center")
+            if locked == True and tries < 1:
+                tries_text = Label(page, text="Ran out of tries: Account Locked", bg="#161616", fg="white", font=('Segoe UI', '10'), width=40)
+                tries_text.place(x=1307, y=183, anchor="w")
+                print("Ran out of tries: Account Locked")
 
         def login(page):
             username_text = Label(page, text="Username: ", bg="#161616", fg="white", font=('Segoe UI', '13'))
@@ -141,7 +175,7 @@ def root_screen(root):
             username_input.place(x=1390, y=76)
             password_input = Entry(page, textvariable=password, width=25, bg="#474747", fg="white", highlightcolor="#161616", bd=0, highlightthickness="1",  highlightbackground="#dbdbdb")
             password_input.place(x=1390, y=106)
-            login_button = Button(page, text="Login", fg="white", bg="#474747", borderwidth=0, height = 1, width = 10, activebackground="#333333", activeforeground="white", command=lambda:sign_in(username.get(), password.get()), font=('Segoe UI', '12'))
+            login_button = Button(page, text="Login", fg="white", bg="#474747", borderwidth=0, height = 1, width = 10, activebackground="#333333", activeforeground="white", command=lambda:sign_in(page, username.get(), password.get(), username_text, password_text, username_input, password_input, login_button), font=('Segoe UI', '12'))
             login_button.place(x=1447, y=136)
 
         def setup():
