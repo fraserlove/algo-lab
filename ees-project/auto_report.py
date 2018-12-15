@@ -6,14 +6,16 @@ Dependencies: Tkinter
 Features
 - Automatic CSV file creation
 - Automatic additon of user entered values to CSV files
-- Login with username and password for extra security
+- Login with username and password
 - Stylish GUI
 - Hashed passwords for extra security
 - Extra UI robustness enhancements
 """
 
 from tkinter import *
-import datetime, csv, os, time, hashlib, uuid
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+import datetime, csv, os, time, hashlib, uuid, smtplib
 
 def initalise_app():
     root = Tk()
@@ -58,12 +60,34 @@ def root_screen(root):
         def destroy_widgit(widgit):
             widgit.destroy()
 
+        def send_email(form_id, time_now, name, issue, enteredText):
+            email = 'email@gmail.com'
+            password = 'password'
+            send_to_email = 'email@gmail.com'
+            subject = '{}: Breakdown Report'.format(username.get())
+            message = 'Emergency Breakdown Report from {}\n\n\tIssue ID: {}\n\tSubmission Time: {}\n\tContact Employees Name: {}\n\tArea of Issue: {}\n\tExtra Information: {}'.format(username.get(), form_id, time_now, name, issue, enteredText) #Add to message other contact info phone etc
+
+            msg = MIMEMultipart()
+            msg['From'] = email
+            msg['To'] = send_to_email
+            msg['Subject'] = subject
+
+            msg.attach(MIMEText(message, 'plain'))
+
+            server = smtplib.SMTP('smtp.gmail.com', 587)
+            server.starttls()
+            server.login(email, password)
+            text = msg.as_string()
+            server.sendmail(email, send_to_email, text)
+            server.quit()
+
         def get_entries(page, form_id, time_now, name, issue, enteredText):
             if locked == False:
                 file = open("data.csv", "a", newline="")
                 writer = csv.writer(file, delimiter=",", quotechar='"', quoting=csv.QUOTE_ALL)
-                writer.writerow([form_id, time_now, name, issue, enteredText])
-                print("Appended: {} {} {} {}".format(form_id, time_now, name, issue, enteredText))
+                writer.writerow([form_id, username.get(), time_now, name, issue, enteredText])
+                send_email(form_id, time_now, name, issue, enteredText)
+                print("Appended: {} {} {} {}".format(form_id, username.get(), time_now, name, issue, enteredText))
                 file.close()
                 submit_display(page, "FORM ID {}: SUCESSFULLY SUBMITTED".format(gen_id()-1), "white")
             if locked == True:
@@ -134,14 +158,14 @@ def root_screen(root):
             hex_dig = hash_object.hexdigest()
             return hex_dig
 
-        def sign_in(page, username, password, username_text, password_text, username_input, password_input, login_button):
+        def sign_in(page, password, username_text, password_text, username_input, password_input, login_button):
             nonlocal tries, locked
             file = open("credentials.txt", "r") # Stored on server
             if tries > 0 and locked == True:
                 for line in file:
                     values = line.split(",")
                     hashed_password = values[1][:64]
-                    if username == values[0] and hash_password(password) == hashed_password:
+                    if username.get() == values[0] and hash_password(password) == hashed_password:
                         locked = False
                         destroy_widgit(username_text)
                         destroy_widgit(username_input)
@@ -151,22 +175,23 @@ def root_screen(root):
                 else:
                     tries -= 1
             if locked == True:
-                tries_text = Label(page, text="Incorrect Username: {} Tries Left".format(tries), bg="#161616", fg="white", font=('Segoe UI', '10'))
-                tries_text.place(x=1355, y=183, anchor="w")
+                tries_text = Label(page, text="Incorrect Username and Password: {} Tries Left".format(tries), bg="#161616", fg="white", font=('Segoe UI', '10'))
+                tries_text.place(x=1270, y=183, anchor="w")
                 tries_text.after(2000, destroy_widgit, tries_text)
             if locked == False:
                 tries_text = Label(page, text="SUCESSFULLY LOGGED IN", bg="#161616", fg="white", font=('Segoe UI', '10'))
                 tries_text.place(x=1440, y=100, anchor="center")
-                welcome_text = Label(page, text="Welcome {}".format(username), bg="#161616", fg="white", font=('Segoe UI', '20'))
+                welcome_text = Label(page, text="Welcome {}".format(username.get()), bg="#161616", fg="white", font=('Segoe UI', '20'))
                 about_text = Label(page, text="Enter values for each field then press submit", bg="#161616", fg="white", font=('Segoe UI', '15'))
                 welcome_text.place(x=1440, y=200, anchor="center")
                 about_text.place(x=1440, y=250, anchor="center")
             if locked == True and tries < 1:
-                tries_text = Label(page, text="Ran out of tries: Account Locked", bg="#161616", fg="white", font=('Segoe UI', '10'), width=40)
-                tries_text.place(x=1307, y=183, anchor="w")
+                tries_text = Label(page, text="Ran out of tries: Account Locked", bg="#161616", fg="white", font=('Segoe UI', '10'), width=60)
+                tries_text.place(x=1237, y=183, anchor="w")
                 print("Ran out of tries: Account Locked")
 
         def login(page):
+            global username
             username_text = Label(page, text="Username: ", bg="#161616", fg="white", font=('Segoe UI', '13'))
             username_text.place(x=1390, y=83, anchor='e')
             password_text = Label(page, text="Password: ", bg="#161616", fg="white", font=('Segoe UI', '13'))
@@ -177,7 +202,7 @@ def root_screen(root):
             username_input.place(x=1390, y=76)
             password_input = Entry(page, textvariable=password, width=25, bg="#474747", fg="white", highlightcolor="#161616", bd=0, highlightthickness="1",  highlightbackground="#dbdbdb")
             password_input.place(x=1390, y=106)
-            login_button = Button(page, text="Login", fg="white", bg="#474747", borderwidth=0, height = 1, width = 10, activebackground="#333333", activeforeground="white", command=lambda:sign_in(page, username.get(), password.get(), username_text, password_text, username_input, password_input, login_button), font=('Segoe UI', '12'))
+            login_button = Button(page, text="Login", fg="white", bg="#474747", borderwidth=0, height = 1, width = 10, activebackground="#333333", activeforeground="white", command=lambda:sign_in(page, password.get(), username_text, password_text, username_input, password_input, login_button), font=('Segoe UI', '12'))
             login_button.place(x=1447, y=136)
 
         def setup():
