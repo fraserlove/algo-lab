@@ -8,6 +8,8 @@ Features
 - Automatic additon of user entered values to CSV files
 - Login with username and password for extra security
 - Stylish GUI
+- Hashed passwords for extra security
+- Extra UI robustness enhancements
 """
 
 from tkinter import *
