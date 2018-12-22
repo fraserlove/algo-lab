@@ -211,7 +211,6 @@ def app():
                                 destroy_widgit(password_text)
                                 destroy_widgit(password_input)
                                 destroy_widgit(login_button)
-                        #else:
                         tries -= 1
                     file.close()
                     if locked == True:
