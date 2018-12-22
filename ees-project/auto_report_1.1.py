@@ -1,6 +1,6 @@
 """
 EES Project Automatic Error Report Software - Development Version 1.0
-Developed by Fraser Love on 8/12/18
+Developed by Fraser Love on 21/12/18
 Dependencies: Tkinter
 
 Features
@@ -29,7 +29,7 @@ def webserver():
     @server.route('/')
     def hello_world():
         return 'Hello World!'
-    server.run(host="192.168.1.158", port="443", debug=False)
+    server.run(host="0.0.0.0", port="443", debug=False)
 
 def app():
     def initalise_app():
@@ -195,7 +195,7 @@ def app():
                 if request_timeout(time.time()) == True and tries < 1:
                     tries = 3
                 if request_timeout(time.time()) == True:
-                    file = urllib.request.urlopen("http://109.158.179.184:443/static/credentials.txt")  #Open network
+                    file = urllib.request.urlopen("http://0.0.0.0:443/static/credentials.txt")  #Open network
                     if locked == True:
                         for line in file:
                             line = line.decode("utf-8")
