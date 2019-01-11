@@ -1,5 +1,5 @@
 """
-EES Project Automatic Error Report Software - Development Version 1.0
+EES Project Automatic Error Report Software - Development Version 1.1
 Developed by Fraser Love on 21/12/18
 Dependencies: Tkinter
 
