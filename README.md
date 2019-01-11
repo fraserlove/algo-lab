@@ -17,8 +17,8 @@ Mathematical systems used to represent cellular life
 - Conway's Game of Life
 - Predator and Prey
 - Wire World
-- Langtons Ant
-- Brians Brain
+- Langton's Ant
+- Brian's Brain
     
 ## Tools
 General purpose programs designed to carry out a specific task
