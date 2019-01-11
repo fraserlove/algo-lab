@@ -14,7 +14,7 @@ Mathematical systems used to represent cellular life
   
 ### Includes:
 
-- Conways Game of Life
+- Conway's Game of Life
 - Predator and Prey
 - Wire World
 - Langtons Ant
