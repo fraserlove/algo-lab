@@ -1,5 +1,5 @@
 # Python Scripts
-Python Scripts developed by Fraser Love. I am currently developing new simulations of Hamltonian Systems, mainly a Quantum Physics probablility calculator.
+Python Scripts developed by Fraser Love. I am currently developing new simulations of Hamltonian Systems, mainly a Quantum Physics probablility calculator to help visualise Heisenberg's Uncertainty Principle.
 
 ## Simulations
 Computer models and simulations of Hamltonian and complex systems
