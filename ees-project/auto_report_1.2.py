@@ -1,7 +1,7 @@
 """
 EES Project Automatic Error Report Software - Development Version 1.2
 Developed by Fraser Love on 21/12/18
-Dependencies: Tkinter
+Dependencies: Tkinter, Flask, Passlib, Hashlib, UUID, Smtplib, Urllib, Pysftp
 
 Features
 - Automatic CSV file creation
