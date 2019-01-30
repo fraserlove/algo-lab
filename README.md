@@ -43,6 +43,15 @@ Project files for a school engineering task to design a more effective way of co
 - Automatic Reporting System
 - HTTP Webserver for Storing Information
 
+## Schoolwork
+Contains programs worked on at school for Higher and N5, includes different algorithms and task solutions
+
+### Includes:
+
+- Record Structure Array Manipulation
+- Parallel Array Programs
+- Count Occurrences, Finding Max and Min, Linear Search
+
 ## CodeWars Scripts
 Solutions to code for the coding challange website codewars. My codewars account - https://www.codewars.com/users/Fraser%20L
 
