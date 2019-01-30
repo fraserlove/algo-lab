@@ -42,4 +42,13 @@ Project files for a school engineering task to design a more effective way of co
 
 - Automatic Reporting System
 - HTTP Webserver for Storing Information
-   
+
+## CodeWars Scripts
+Solutions to code for the coding challange website codewars. My codewars account - https://www.codewars.com/users/Fraser%20L
+
+### Includes:
+- Kata Level 5 Scripts
+- Kata Level 6 Scripts
+- Kata Level 7 Scripts
+- Kata Level 8 Scripts
+
