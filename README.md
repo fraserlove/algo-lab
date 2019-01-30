@@ -35,7 +35,7 @@ General purpose programs designed to carry out a specific task
 - Random Text File Generator
 - Prime Number Search
 
-##EES Project
+## EES Project
 Project files for a school engineering task to design a more effective way of communication between company and clients
 
 ### Includes:
