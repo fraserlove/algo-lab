@@ -1,6 +1,6 @@
 """
 EES Project Automatic Error Report Software - Development Version 1.3
-Developed by Fraser Love on 30/01/18
+Developed by Fraser Love on 01/02/19
 Dependencies: Tkinter
 
 Features
@@ -16,7 +16,6 @@ Features
 - Server login increasing robustness
 - Enhanced UI displaying more useful data
 - Client Side Storage of Information
-- Cleaner and more robust UI
 """
 
 from tkinter import *
@@ -29,6 +28,7 @@ import datetime, csv, os, time, hashlib, uuid, smtplib, threading, urllib, pysft
 def app():
     def initalise_app():
         root = Tk()
+        root.overrideredirect(1)
         return root
 
     def close_window():
@@ -45,7 +45,7 @@ def app():
 
         def navbar(root):
             nav = Frame(root, bg="#474747")
-            title = Label(nav, text="Client Interface Software - Development Version", bg="#474747", fg="white")
+            title = Label(nav, text="Automatic Report Software - Development Version", bg="#474747", fg="white")
             button1 = Button(nav, text="File", fg="white", bg="#474747", borderwidth=0, height = 1, width = 5, activebackground="#333333", activeforeground="white")
             button2 = Button(nav, text="Open", fg="white", bg="#474747", borderwidth=0, height = 1, width = 5, activebackground="#333333", activeforeground="white")
             button3 = Button(nav, text="Help", fg="white", bg="#474747", borderwidth=0, height = 1, width = 5, activebackground="#333333", activeforeground="white")
@@ -70,7 +70,6 @@ def app():
                 widgit.destroy()
 
             def send_email(message, subject):
-                print("Email Sent!")
                 email = sending_email.get()
                 password = email_pass.get()
                 send_to_email = recieving_email.get()
@@ -95,17 +94,17 @@ def app():
                     writer = csv.writer(file, delimiter=",", quotechar='"', quoting=csv.QUOTE_ALL)
                     writer.writerow([form_id, username.get(), time_now, name, issue, enteredText])
                     file.close()
-                    info = open("user_info.txt", "r+")
+                    info = open("data/user_info.txt", "r+")
                     for row in info:
                         text = row.split(",")
                         if text[0] == username.get().lower():
                             text[2] = str(gen_id()-1)
                             text = ",".join(text)
                     info.close()
-                    info = open("user_info.txt", "w")
+                    info = open("data/user_info.txt", "w")
                     info.write(text)
                     info.close()
-                    submit_display(page, "FORM ID {}: SUCESSFULLY SUBMITTED".format(gen_id()-1), "white")
+                    submit_display(page, "FORM ID {}: SUCESSFULLY SUBMITTED".format(gen_id()-1), "#42f456")
                     send_email(message, '{}: Breakdown Report'.format(username.get()))
                     print("Appended: {} {} {} {}".format(form_id, username.get(), time_now, name, issue, enteredText))
                 if locked == True:
@@ -114,11 +113,12 @@ def app():
 
             def submit_display(page, string, colour):
                 submit_text = Label(page, text=string, bg="#161616", fg=colour, font=('Segoe UI', '10'))
-                submit_text.place(x=920, y=595, anchor="e")
+                submit_text.place(x=790, y=550, anchor="e")
                 submit_text.after(3500, destroy_widgit, submit_text)
 
             def collect_time(page):
                 time_now = datetime.datetime.now()
+                time_now = time_now.strftime("%X") + " - " + time_now.strftime("%x")
                 submit_time = Label(page, text="Time: {}".format(time_now), bg="#161616", fg="white", font=('Segoe UI', '13'))
                 submit_time.place(x=10, y=70)
                 return time_now
@@ -163,7 +163,7 @@ def app():
                 return 'Emergency Breakdown Report from {}\n\n\tIssue ID: {}\n\tSubmission Time: {}\n\tContact Employees Name: {}\n\tArea of Issue: {}\n\tExtra Information: {}'.format(username.get(), gen_id(), time_now, name_text, issue_text, description_text)
 
             def submit_setup(page, time_now, name, issue, description):
-                submit_button = Button(page, text="Submit", fg="white", bg="#474747", borderwidth=0, height = 1, width = 10, activebackground="#333333", activeforeground="white", command=lambda:get_entries(page, gen_id(), time_now, name.get(), issue.get(), description.get("1.0",END), get_message(time_now, name.get(), issue.get(), description.get("1.0",END))), font=('Segoe UI', '15'))
+                submit_button = Button(page, text="Submit", fg="white", bg="#474747", borderwidth=0, height = 1, width = 10, activebackground="#333333", activeforeground="white", command=lambda:get_entries(page, gen_id(), time_now, name.get(), issue.get(), description.get("1.0","end-1c"), get_message(time_now, name.get(), issue.get(), description.get("1.0","end-1c"))), font=('Segoe UI', '15'))
                 submit_button.place(x=800, y=530)
 
             def report_head(page):
@@ -175,8 +175,7 @@ def app():
                 login_header.place(x=1240, y=30, anchor="center")
 
             def update_email(page, recieving_email, sending_email, email_pass):
-                print("Hello")
-                info = open("user_info.txt", "r+")
+                info = open("data/user_info.txt", "r+")
                 text = ""
                 for row in info:
                     text = row.split(",")
@@ -185,25 +184,67 @@ def app():
                         text[4] = sending_email
                         text[5] = email_pass
                         text = ",".join(text)
-                print("Text",text)
                 info.close()
-                info = open("user_info.txt", "w")
+                info = open("data/user_info.txt", "w")
                 info.write(text)
                 info.close()
                 update_text = Label(page, text="Email Updated Sucessfully!", bg="#161616", fg="#42f456", font=('Segoe UI', '10'), width=23)
-                update_text.place(x=1345, y=307, anchor="e")
+                update_text.place(x=1345, y=487, anchor="e")
                 update_text.after(3000, destroy_widgit, update_text)
+
+            def display_table(page):
+                prevous_text = Label(page, text="LATEST REPORTS", bg="#161616", fg="white", font=('Segoe UI', '18', 'bold'))
+                prevous_text.place(x=480, y=590, anchor="center")
+                if os.path.isfile("data/data.csv"):
+                    id_header = Label(page, text="Report ID", bg="#161616", fg="white", font=('Segoe UI', '10', 'bold'))
+                    username_header = Label(page, text="Submitted By", bg="#161616", fg="white", font=('Segoe UI', '10', 'bold'))
+                    time_header = Label(page, text="Date/Time", bg="#161616", fg="white", font=('Segoe UI', '10', 'bold'))
+                    name_header = Label(page, text="Engineer Name", bg="#161616", fg="white", font=('Segoe UI', '10', 'bold'))
+                    area_header = Label(page, text="Area Of Issue", bg="#161616", fg="white", font=('Segoe UI', '10', 'bold'))
+                    info_header = Label(page, text="Extra Information", bg="#161616", fg="white", font=('Segoe UI', '10', 'bold'))
+                    id_header.place(x=105, y=630, anchor="w")
+                    username_header.place(x=193, y=630, anchor="w")
+                    time_header.place(x=315, y=630, anchor="w")
+                    name_header.place(x=475, y=630, anchor="w")
+                    area_header.place(x=615, y=630, anchor="w")
+                    info_header.place(x=755, y=630, anchor="w")
+                    with open('data/data.csv') as csv_file:
+                        csv_reader = csv.reader(csv_file, delimiter=',')
+                        row_no = 0
+                        active_row = 0
+                        for table_row in csv.reader(csv_file):
+                            if row_no + 6 > gen_id()-1:
+                                for column in range(len(table_row)):
+                                    if column == 0:
+                                        element = Label(page, text=table_row[column], bg="#161616", fg="white", font=('Segoe UI', '10'), anchor="w")
+                                        element.place(x=105+column*140, y=660+active_row*30, anchor="w")
+                                    elif column == 2:
+                                        element = Label(page, text=table_row[column], bg="#161616", fg="white", font=('Segoe UI', '10'), width=25, anchor="w")
+                                        element.place(x=35+column*140, y=660+active_row*30, anchor="w")
+                                    elif column < len(table_row)-1:
+                                        element = Label(page, text=table_row[column], bg="#161616", fg="white", font=('Segoe UI', '10'), width=25, anchor="w")
+                                        element.place(x=55+column*140, y=660+active_row*30, anchor="w")
+                                    else:
+                                        element = Label(page, text=table_row[column], bg="#161616", fg="white", font=('Segoe UI', '10'), width=50, anchor="w")
+                                        element.place(x=55+column*140, y=660+active_row*30, anchor="w")
+                                active_row += 1
+                            row_no += 1
+                else:
+                    table_error_text = Label(page, text="No Previous Reports To Be Displayed", bg="#161616", fg="red", font=('Segoe UI', '13'))
+                    table_error_text.place(x=480, y=630, anchor="center")
 
             def login_panel(page, login_time):
                 global recieving_email, sending_email, email_pass
+                stats_header = Label(page, text="STATS/INFO", bg="#161616", fg="white", font=('Segoe UI', '18', 'bold'))
+                stats_header.place(x=1240, y=200, anchor="center")
                 latest_login = Label(page, text="Last Login: " + str(login_time), bg="#161616", fg="white", font=('Segoe UI', '13'))
-                latest_login.place(x=1190, y=350)
+                latest_login.place(x=1240, y=250, anchor="center")
                 forms_sent = Label(page, text="Total Forms Sent: " + str(gen_id()-1), bg="#161616", fg="white", font=('Segoe UI', '13'))
-                forms_sent.place(x=1190, y=400)
+                forms_sent.place(x=1240, y=280, anchor="center")
                 recieving_email = StringVar()
                 sending_email = StringVar()
                 email_pass = StringVar()
-                info = open("user_info.txt", "r+")
+                info = open("data/user_info.txt", "r+")
                 for row in info:
                     text = row.split(",")
                     if text[0] == username.get().lower():
@@ -212,21 +253,22 @@ def app():
                         email_pass.set(text[5])
                 info.close()
                 settings_header = Label(page, text="SETTINGS", bg="#161616", fg="white", font=('Segoe UI', '18', 'bold'))
-                settings_header.place(x=1240, y=180, anchor="center")
+                settings_header.place(x=1240, y=350, anchor="center")
                 r_email_text = Label(page, text="Recieving Email: ", bg="#161616", fg="white", font=('Segoe UI', '13'))
-                r_email_text.place(x=1180, y=220, anchor="e")
+                r_email_text.place(x=1180, y=400, anchor="e")
                 s_email_text = Label(page, text="Your Email: ", bg="#161616", fg="white", font=('Segoe UI', '13'))
-                s_email_text.place(x=1180, y=250, anchor="e")
+                s_email_text.place(x=1180, y=430, anchor="e")
                 r_email_entry = Entry(page, textvariable=recieving_email, width=40, bg="#474747", fg="white", highlightcolor="#161616", bd=0, highlightthickness="1",  highlightbackground="#dbdbdb")
-                r_email_entry.place(x=1180, y=213)
+                r_email_entry.place(x=1180, y=393)
                 s_email_entry = Entry(page, textvariable=sending_email, width=40, bg="#474747", fg="white", highlightcolor="#161616", bd=0, highlightthickness="1",  highlightbackground="#dbdbdb")
-                s_email_entry.place(x=1180, y=243)
+                s_email_entry.place(x=1180, y=423)
                 pass_text = Label(page, text="Email Password: ", bg="#161616", fg="white", font=('Segoe UI', '13'))
-                pass_text.place(x=1180, y=280, anchor="e")
+                pass_text.place(x=1180, y=460, anchor="e")
                 email_password = Entry(page, textvariable=email_pass, width=40, bg="#474747", fg="white", highlightcolor="#161616", bd=0, highlightthickness="1",  highlightbackground="#dbdbdb")
-                email_password.place(x=1180, y=273)
+                email_password.place(x=1180, y=453)
                 set_email = Button(page, text="Set Email", fg="white", bg="#474747", borderwidth=0, height = 1, width = 10, activebackground="#333333", activeforeground="white", command=lambda:update_email(page, recieving_email.get(), sending_email.get(), email_pass.get()))
-                set_email.place(x=1347, y=298)
+                set_email.place(x=1347, y=478)
+                display_table(page)
 
             def hash(password):
                 hash_object = hashlib.sha256(password.encode())
@@ -253,7 +295,7 @@ def app():
                 if request_timeout(time.time()) == True and tries < 1:
                     tries = 3
                 if request_timeout(time.time()) == True:
-                    file = urllib.request.urlopen("http://1.1.1.1:3400/static/credentials.txt")
+                    file = urllib.request.urlopen("http://1.1.1.1:3402/static/credentials.txt")
                     if locked == True:
                         for line in file:
                             line = line.decode("utf-8")
@@ -277,32 +319,29 @@ def app():
                         tries_text.after(2000, destroy_widgit, tries_text)
                     if locked == False:
                         last_login = "First Time Logging In"
-                        if os.path.isfile("user_info.txt"):
-                            info = open("user_info.txt", "r+")
+                        if os.path.isfile("data/user_info.txt"):
+                            info = open("data/user_info.txt", "r+")
                             file_len = 0
                             for row in info:
                                 file_len += 1
                                 text = row.split(",")
                                 if text[0] == username.decode("utf-8"):
                                     last_login = text[1]
-                                    print("Last login: ",last_login)
                                     text[1] = str(datetime.datetime.now())
                                     text = ",".join(text)
                             if file_len > 0:
                                 info.close()
-                                info = open("user_info.txt", "w")
+                                info = open("data/user_info.txt", "w")
                                 info.write(text)
                                 info.close()
                             else:
-                                info = open("user_info.txt", "w")
-                                info.write(username.decode("utf-8") + "," + str(datetime.datetime.now()) + "," + "0" + "," + "recieving@mail.co.uk" + "," + "sending@mail.co.uk" + "," + "")
+                                info = open("data/user_info.txt", "w")
+                                info.write(username.decode("utf-8") + "," + str(datetime.datetime.now()) + "," + "0" + "," + "" + "," + "" + "," + "")
                                 info.close()
                         else:
-                            info = open("user_info.txt", "w")
-                            info.write(username.decode("utf-8") + "," + str(datetime.datetime.now()) + "," + "0" + "," + "recieving@mail.co.uk" + "," + "sending@mail.co.uk" + "," + "")
+                            info = open("data/user_info.txt", "w")
+                            info.write(username.decode("utf-8") + "," + str(datetime.datetime.now()) + "," + "0" + "," + "" + "," + "" + "," + "")
                             info.close()
-                        #tries_text = Label(page, text="SUCESSFULLY LOGGED IN", bg="#161616", fg="white", font=('Segoe UI', '10'))
-                        #tries_text.place(x=1240, y=100, anchor="center")
                         welcome_text = Label(page, text="Welcome {}".format(username.decode("utf-8")), bg="#161616", fg="white", font=('Segoe UI', '20'))
                         about_text = Label(page, text="Enter values for each field then press submit", bg="#161616", fg="white", font=('Segoe UI', '15'))
                         welcome_text.place(x=1240, y=90, anchor="center")
@@ -365,7 +404,9 @@ def app():
 
     root = initalise_app()
     root_screen(root)
-    root.geometry("1600x900")
+    x_pos = int(root.winfo_screenwidth()/2)-800
+    y_pos = int(root.winfo_screenheight()/2)-450
+    root.geometry("1600x900+" + str(x_pos) + "+" + str(y_pos))
     root.resizable(0, 0)
     root.mainloop()
 
