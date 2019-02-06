@@ -6,7 +6,7 @@ Computer models and simulations of Hamltonian and complex systems
   
 ### Includes:
 
-- Gravity Simulation
+- 2D Gravity Simulation
 - Solar System Simulation
    
 ## Cellular Automata
