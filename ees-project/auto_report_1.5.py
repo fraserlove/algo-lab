@@ -16,6 +16,7 @@ Features
 - Server login increasing robustness
 - Enhanced UI displaying more useful data
 - Client Side Storage of Information
+- Ability to upload content
 """
 
 from tkinter import *
