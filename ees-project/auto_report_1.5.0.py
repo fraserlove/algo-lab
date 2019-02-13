@@ -1,5 +1,5 @@
 """
-EES Project Automatic Error Report Software - Development Version 1.5
+EES Project Automatic Error Report Software - Development Version 1.5.0
 Developed by Fraser Love on 13/02/19
 Dependencies: Tkinter
 
@@ -491,7 +491,7 @@ def app():
         def about(root):
             bar = Frame(root, bg="#333333")
             bar.place(x=800, y=900, anchor="s", width=1600)
-            info1 = Label(bar, text="Version 1.5", bg="#333333", fg="white")
+            info1 = Label(bar, text="Version 1.5.0", bg="#333333", fg="white")
             info2 = Label(bar, text="Developed by Fraser Love", bg="#333333", fg="white")
             info3 = Label(bar, text="Partners: Evolution BPS", bg="#333333", fg="white")
             info1.grid(row=0, column=0, padx=10)
