@@ -6,6 +6,6 @@ def webserver():
     @server.route('/')
     def run():
         return 'Running!'
-    server.run(host="192.168.1.2", port="3400", debug=False)
+    server.run(host="192.168.1.1", port="3402", debug=False)
 
 webserver()
