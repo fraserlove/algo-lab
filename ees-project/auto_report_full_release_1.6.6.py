@@ -57,19 +57,25 @@ from email.mime.base import MIMEBase
 from email import encoders
 from passlib.hash import pbkdf2_sha256
 import speech_recognition as sr
-import matplotlib.pyplot as plt
 from PIL import Image, ImageGrab
 import datetime, csv, os, time, hashlib, uuid, smtplib, threading, urllib, pyglet, pytesseract, cv2
 from gtts import gTTS
 
-pyglet.lib.load_library('avbin')
-pyglet.have_avbin=True
+try:
+    pyglet.lib.load_library('avbin')
+    pyglet.have_avbin=True
+except:
+    print("Error: avbin not installed")
 
 def app():
 
     def gen_folders():
         if os.path.exists("{}/media".format(os.getcwd())) == False:
             os.makedirs("{}/media".format(os.getcwd()))
+        if os.path.exists("{}/data".format(os.getcwd())) == False:
+            os.makedirs("{}/data".format(os.getcwd()))
+        if os.path.exists("{}/pdfs".format(os.getcwd())) == False:
+            os.makedirs("{}/pdfs".format(os.getcwd()))
 
     def screen_cap():
         vid_path = ""
@@ -183,12 +189,14 @@ def app():
         return result
 
     def tts(text, lang):
-        file = gTTS(text = text, lang = lang)
-        file.save("temp.mp3")
-
-        music = pyglet.media.load("temp.mp3", streaming = False)
-        music.play()
-        os.remove("temp.mp3")
+        try:
+            file = gTTS(text = text, lang = lang)
+            file.save("temp.mp3")
+            music = pyglet.media.load("temp.mp3", streaming = False)
+            music.play()
+            os.remove("temp.mp3")
+        except:
+            print("Error: Unable to play feedback because AVbin is not installed")
 
     def speech_man():
         r = sr.Recognizer()
@@ -337,7 +345,7 @@ def app():
                     if language != "en":
                         title, job_str, time_str, engineer_str, manufacturer_str, model_str, machine_id_str, customer_str, contact_str, location_str, type_str, charge_str, description_str = translate(language, title, job_str, time_str, engineer_str, manufacturer_str, model_str, machine_id_str, customer_str, contact_str, location_str, type_str, charge_str, description_str)
                     try:
-                        pdf = canvas.Canvas(("report-{}.pdf").format(language))
+                        pdf = canvas.Canvas(("pdfs/report-{}.pdf").format(language))
                         pdf.setFont("Helvetica-Bold", 30, leading=None)
                         pdf.drawCentredString(300, 750, str(title))
                         pdf.setFont("Helvetica", 14, leading=None)
@@ -353,7 +361,7 @@ def app():
                         pdf.drawCentredString(300, 430, str(type_str))
                         pdf.drawCentredString(300, 400, str(charge_str))
                         pdf.drawCentredString(300, 370, str(description_str))
-                        logo = "data/logo.jpg"
+                        logo = "logo.jpg"
                         pdf.drawImage(logo, 0, 0, width=700, height=150)
                         pdf.showPage()
                         pdf.save()
@@ -612,8 +620,10 @@ def app():
                 update_text.after(3000, destroy_widgit, update_text)
 
             def display_table(page):
-                global prevous_text, elements
+                global prevous_text, elements, table_canvas, table_error_text
                 elements = []
+                table_canvas = Canvas(page, width=800, height=400, bg=check_bg(), borderwidth=0, bd=0, highlightthickness=0, relief='ridge')
+                table_canvas.place(x=10, y=790)
                 prevous_text = Label(page, text="LATEST REPORTS", bg=check_bg(), fg=check_fg(), font=('Segoe UI', '18', 'bold'))
                 prevous_text.place(x=480, y=790, anchor="center")
                 with open('data/data.csv') as csv_file:
@@ -656,7 +666,7 @@ def app():
                                 active_row += 1
                             row_no += 1
                 else:
-                    table_error_text = Label(page, text="No Previous Reports To Be Displayed", bg="#161616", fg="red", font=('Segoe UI', '13'))
+                    table_error_text = Label(page, text="No Previous Reports To Be Displayed", bg=check_bg(), fg="red", font=('Segoe UI', '13'))
                     table_error_text.place(x=480, y=820, anchor="center")
 
             def login_panel(page, login_time):
@@ -762,49 +772,52 @@ def app():
                         tries_text = Label(page, text="ERROR: cannot contact server", bg=check_bg(), fg="red", font=('Segoe UI', '10'))
                         tries_text.place(x=1648, y=183, anchor="e")
                         tries_text.after(2000, destroy_widgit, tries_text)
-                    if locked == True:
-                        for line in file:
-                            line = line.decode("utf-8")
-                            values = line.split(",")
-                            for value in values:
-                                value = value.encode("utf-8")
-                            if pbkdf2_sha256.verify(password, values[1][:87]) and pbkdf2_sha256.verify(username, values[0]):
-                                locked = False
-                                destroy_widgit(username_text)
-                                destroy_widgit(username_input)
-                                destroy_widgit(password_text)
-                                destroy_widgit(password_input)
-                                destroy_widgit(login_button)
-                        tries -= 1
-                    file.close()
-                    if locked == True:
-                        tries_text = Label(page, text="Incorrect Username and Password: {} Tries Left".format(tries), bg=check_bg(), fg="red", font=('Segoe UI', '10'))
-                        tries_text.place(x=1648, y=183, anchor="e")
-                        tries_text.after(2000, destroy_widgit, tries_text)
-                    if locked == False:
-                        last_login = ""
-                        if username_file_check(username) == False:
-                            gen_data_file(username)
-                        with open("data/user_info.txt", "r") as file:
-                            data = file.readlines()
-                            to_write = []
-                            for line in data:
-                                line = line.split(",")
-                                if line[0] == username:
-                                    last_login = line[1]
-                                    line[1] = str(datetime.datetime.now())
-                                line = line[0] + "," + line[1] + "," + line[2] + "," + line[3] + "," + line[4] + "," + line[5]
-                                to_write.append(line)
-                        with open("data/user_info.txt", "w") as file:
-                            for line in to_write:
-                                file.write(line)
-                        welcome_text = Label(page, text="Welcome {}".format(username.capitalize()), bg="#161616", fg="white", font=('Segoe UI', '20'))
-                        about_text = Label(page, text="To produce a report fill out the specified fields in the form\nAttach videos, screen captures, images or documents\nPress submit to finish", bg="#161616", fg="white", font=('Segoe UI', '15'))
-                        welcome_text.place(x=1540, y=90, anchor="center")
-                        about_text.place(x=1540, y=160, anchor="center")
-                        login_panel(page, last_login)
-                        send_email("Security Alert: \n\n\tA sucessfull login attempt occured at {}".format(datetime.datetime.now()), "Security Alert: Sucessfull Login Attempt", True)
-                        theme_update(str(theme_slider.get()))
+                    try:
+                        if locked == True:
+                            for line in file:
+                                line = line.decode("utf-8")
+                                values = line.split(",")
+                                for value in values:
+                                    value = value.encode("utf-8")
+                                if pbkdf2_sha256.verify(password, values[1][:87]) and pbkdf2_sha256.verify(username, values[0]):
+                                    locked = False
+                                    destroy_widgit(username_text)
+                                    destroy_widgit(username_input)
+                                    destroy_widgit(password_text)
+                                    destroy_widgit(password_input)
+                                    destroy_widgit(login_button)
+                            tries -= 1
+                        file.close()
+                        if locked == True:
+                            tries_text = Label(page, text="Incorrect Username and Password: {} Tries Left".format(tries), bg=check_bg(), fg="red", font=('Segoe UI', '10'))
+                            tries_text.place(x=1648, y=183, anchor="e")
+                            tries_text.after(2000, destroy_widgit, tries_text)
+                        if locked == False:
+                            last_login = ""
+                            if username_file_check(username) == False:
+                                gen_data_file(username)
+                            with open("data/user_info.txt", "r") as file:
+                                data = file.readlines()
+                                to_write = []
+                                for line in data:
+                                    line = line.split(",")
+                                    if line[0] == username:
+                                        last_login = line[1]
+                                        line[1] = str(datetime.datetime.now())
+                                    line = line[0] + "," + line[1] + "," + line[2] + "," + line[3] + "," + line[4] + "," + line[5]
+                                    to_write.append(line)
+                            with open("data/user_info.txt", "w") as file:
+                                for line in to_write:
+                                    file.write(line)
+                            welcome_text = Label(page, text="Welcome {}".format(username.capitalize()), bg="#161616", fg="white", font=('Segoe UI', '20'))
+                            about_text = Label(page, text="To produce a report fill out the specified fields in the form\nAttach videos, screen captures, images or documents\nPress submit to finish", bg="#161616", fg="white", font=('Segoe UI', '15'))
+                            welcome_text.place(x=1540, y=90, anchor="center")
+                            about_text.place(x=1540, y=160, anchor="center")
+                            login_panel(page, last_login)
+                            send_email("Security Alert: \n\n\tA sucessfull login attempt occured at {}".format(datetime.datetime.now()), "Security Alert: Sucessfull Login Attempt", True)
+                            theme_update(str(theme_slider.get()))
+                    except:
+                        print("Error: cannot log in")
                     if locked == True and tries < 1:
                         file = open("data/logins.txt","w+")
                         file.write(str(time.time()))
@@ -861,7 +874,7 @@ def app():
                 dark = {"fg": "#ffffff", "buttons": "#474747", "panels": "#333333", "bg": "#161616", "radio_bg": "#000000", "highlight": "#dbdbdb", "entry": "#474747", "select": "#474747"}
                 light = {"fg": "#000000", "buttons": "#1366C4", "panels": "#CCCCCC", "bg": "#E9E9E9", "radio_bg": "#1366C4", "highlight": "#848484", "entry": "#CCCCCC", "select": "#1366C4"}
                 if is_theme == "1":
-                    theme_slider.config(bg=light["buttons"], activebackground=light["panels"], troughcolor=light["panels"])
+                    theme_slider.config(bg=light["buttons"], activebackground=light["buttons"], troughcolor=light["panels"])
                     theme_text.config(bg=light["bg"], fg=light["fg"])
                     page.config(bg=light["bg"])
                     bar.config(bg=light["panels"])
@@ -913,7 +926,7 @@ def app():
                     report_header.config(bg=light["bg"], fg=light["fg"])
                     nav.config(bg=light["panels"])
                     title.config(bg=light["panels"], fg=light["fg"])
-                    exit.config(fg=light["fg"], bg=light["entry"], activebackground=light["panels"], activeforeground=light["fg"])
+                    exit.config(fg=light["fg"], bg=light["panels"], activebackground=light["panels"], activeforeground=light["fg"])
                     for text in file_text_array:
                         text.config(bg=light["bg"])
                     try:
@@ -968,8 +981,13 @@ def app():
                         prevous_text.config(bg=light["bg"], fg=light["fg"])
                         for element in elements:
                             element.config(bg=light["bg"], fg=light["fg"])
+                        table_canvas.config(bg=light["bg"])
+                        try:
+                            table_error_text.config(bg=light["bg"], fg=light["fg"])
+                        except:
+                            pass
                 if is_theme == "0":
-                    theme_slider.config(bg=dark["buttons"], activebackground=dark["panels"], troughcolor=dark["panels"])
+                    theme_slider.config(bg=dark["buttons"], activebackground=dark["buttons"], troughcolor=dark["panels"])
                     theme_text.config(bg=dark["bg"], fg=dark["fg"])
                     page.config(bg=dark["bg"])
                     bar.config(bg=dark["panels"])
@@ -1021,7 +1039,7 @@ def app():
                     report_header.config(bg=dark["bg"], fg=dark["fg"])
                     nav.config(bg=dark["panels"])
                     title.config(bg=dark["panels"], fg=dark["fg"])
-                    exit.config(fg=dark["fg"], bg=dark["entry"], activebackground=dark["panels"], activeforeground=dark["fg"])
+                    exit.config(fg=dark["fg"], bg=dark["panels"], activebackground=dark["panels"], activeforeground=dark["fg"])
                     for text in file_text_array:
                         text.config(bg=dark["bg"])
                     try:
@@ -1076,8 +1094,11 @@ def app():
                         prevous_text.config(bg=dark["bg"], fg=dark["fg"])
                         for element in elements:
                             element.config(bg=dark["bg"], fg=dark["fg"])
-
-
+                        table_canvas.config(bg=dark["bg"])
+                        try:
+                            table_error_text.config(bg=dark["bg"], fg=dark["fg"])
+                        except:
+                            pass
 
             def setup():
                 global page
