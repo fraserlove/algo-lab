@@ -26,6 +26,7 @@ Features
 - Automatic email of sucessfull and unsuccessfull login attempts
 - Server login increasing robustness
 - Enhanced UI displaying more useful data
+- Ability to email and text head office
 - Client Side Storage of Information
 - Ability to upload content
 - Automatic Table UI Updates
@@ -925,7 +926,7 @@ def app():
                     tries = 3
                 if request_timeout(time.time()) == True:
                     try:
-                        file = urllib.request.urlopen("http://86.146.160.11:3402/static/credentials.txt")
+                        file = urllib.request.urlopen("http://0.0.0.0:3402/static/credentials.txt")
                     except:
                         tries_text = Label(page, text="ERROR: cannot contact server", bg=check_bg(), fg="red", font=('Segoe UI', '10'))
                         tries_text.place(x=1648, y=183, anchor="e")
