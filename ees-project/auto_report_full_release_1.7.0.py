@@ -354,9 +354,10 @@ def app():
                         img_resp = requests.get(url)
                         img_arr = np.array(bytearray(img_resp.content), dtype=np.uint8)
                         img = cv2.imdecode(img_arr, -1)
-                        cv2.imshow("PhoneCam", img)
+                        cv2.imshow("PhoneCam - Press Enter to Exit", img)
                         if cv2.waitKey(1) & 0xFF == 13:
                             break
+                    cv2.destroyAllWindows()
                 except:
                     ls_error_text = Label(page, text="Error: cannot contact device", bg=check_bg(), fg="red", font=('Segoe UI', '10'))
                     ls_error_text.place(x=1540, y=525, anchor="w")
