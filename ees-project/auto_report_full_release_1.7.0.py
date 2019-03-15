@@ -825,9 +825,9 @@ def app():
 
             def send_sms(msg):
                 global username
-                account_sid = "AC58787369efb270286b30f5b564b7db76"
-                auth_token = "7959fa1b8050b311f445ec6908b5d89b"
-                receiving_num = "+447469881637"
+                account_sid = ""
+                auth_token = ""
+                receiving_num = ""
                 sending_num = "+447480781230"
                 msg = "Message from {}:\n".format(username.get()) + msg
                 client = Client(account_sid, auth_token)
