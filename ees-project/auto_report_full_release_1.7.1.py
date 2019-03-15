@@ -14,6 +14,10 @@ a bug contact us with detail of the bug to help get it patched.
 Patches
 - Fixed overall slow response of program by implementing a delay in unconditional statement on other thread
 --------------------------------------
+--------------------------------------
+Improvements
+- Condensed code for changing UI elements colour when theme changes
+--------------------------------------
 
 --------------------------------------
 Final Release
@@ -1028,373 +1032,190 @@ def app():
             def theme_update(is_theme):
                 dark = {"fg": "#ffffff", "buttons": "#474747", "panels": "#333333", "bg": "#161616", "radio_bg": "#000000", "highlight": "#dbdbdb", "entry": "#474747", "select": "#474747"}
                 light = {"fg": "#000000", "buttons": "#1366C4", "panels": "#CCCCCC", "bg": "#E9E9E9", "radio_bg": "#1366C4", "highlight": "#848484", "entry": "#CCCCCC", "select": "#1366C4"}
-                if is_theme == "1":
-                    time_canvas.config(bg=light["buttons"])
-                    time_text.config(bg=light["buttons"], fg=light["fg"])
-                    uk_text.config(bg=light["buttons"], fg=light["fg"])
-                    uk_work.config(bg=light["buttons"], fg=light["fg"])
-                    italy_text.config(bg=light["buttons"], fg=light["fg"])
-                    italy_work.config(bg=light["buttons"], fg=light["fg"])
-                    clear_button.config(fg=light["fg"], bg=light["buttons"], activebackground=light["panels"], activeforeground=light["fg"])
-                    error_header.config(bg=light["bg"], fg=light["fg"])
-                    error_canvas.config(bg=light["panels"])
-                    for error_text in error_text_list:
-                        error_text.config(bg=light["panels"], fg=light["fg"])
-                    theme_slider.config(bg=light["buttons"], activebackground=light["buttons"], troughcolor=light["panels"])
-                    theme_text.config(bg=light["bg"], fg=light["fg"])
-                    page.config(bg=light["bg"])
-                    bar.config(bg=light["panels"])
-                    info1.config(bg=light["panels"], fg=light["fg"])
-                    info2.config(bg=light["panels"], fg=light["fg"])
-                    info3.config(bg=light["panels"], fg=light["fg"])
-                    login_header.config(bg=light["bg"], fg=light["fg"])
-                    submit_button.config(fg=light["fg"], bg=light["buttons"], activebackground=light["panels"], activeforeground=light["fg"])
-                    pdf_button.config(fg=light["fg"], bg=light["buttons"], activebackground=light["panels"], activeforeground=light["fg"])
-                    lang_text.config(bg=light["bg"], fg=light["fg"])
-                    lang_entry.config(bg=light["entry"], fg=light["fg"], highlightcolor=light["bg"], highlightbackground = light["highlight"])
-                    description_text.config(bg=light["bg"], fg=light["fg"])
-                    extra_text.config(bg=light["bg"], fg=light["fg"])
-                    description.config(bg=light["entry"], fg=light["fg"], highlightcolor=light["bg"], highlightbackground = light["highlight"])
-                    speech_button.config(fg=light["fg"], bg=light["buttons"], activebackground=light["panels"], activeforeground=light["fg"])
-                    manufacturer.config(bg=light["bg"], fg=light["fg"])
-                    manufacturer_set.config(bg=light["entry"], fg=light["fg"], highlightcolor=light["bg"], highlightbackground = light["highlight"], activebackground=light["select"])
-                    machine_model_text.config(bg=light["bg"], fg=light["fg"])
-                    machine_model_input.config(bg=light["entry"], fg=light["fg"], highlightcolor=light["bg"], highlightbackground = light["highlight"])
-                    machine_id_text.config(bg=light["bg"], fg=light["fg"])
-                    machine_id_input.config(bg=light["entry"], fg=light["fg"], highlightcolor=light["bg"], highlightbackground = light["highlight"])
-                    customer_name_text.config(bg=light["bg"], fg=light["fg"])
-                    customer_name_input.config(bg=light["entry"], fg=light["fg"], highlightcolor=light["bg"], highlightbackground = light["highlight"])
-                    contact_name_text.config(bg=light["bg"], fg=light["fg"])
-                    contact_name_input.config(bg=light["entry"], fg=light["fg"], highlightcolor=light["bg"], highlightbackground = light["highlight"])
-                    location_text.config(bg=light["bg"], fg=light["fg"])
-                    location_input.config(bg=light["entry"], fg=light["fg"], highlightcolor=light["bg"], highlightbackground = light["highlight"])
-                    customer_charge_text.config(bg=light["bg"], fg=light["fg"])
-                    customer_charge_set.config(bg=light["entry"], fg=light["fg"], highlightcolor=light["bg"], highlightbackground = light["highlight"], activebackground=light["select"])
-                    job_type_text.config(bg=light["bg"], fg=light["fg"])
-                    job_type_1.config(bg=light["bg"], fg=light["fg"], activebackground=light["panels"], activeforeground=light["radio_bg"], selectcolor=light["panels"])
-                    job_type_2.config(bg=light["bg"], fg=light["fg"], activebackground=light["panels"], activeforeground=light["radio_bg"], selectcolor=light["panels"])
-                    job_type_3.config(bg=light["bg"], fg=light["fg"], activebackground=light["panels"], activeforeground=light["radio_bg"], selectcolor=light["panels"])
-                    job_type_4.config(bg=light["bg"], fg=light["fg"], activebackground=light["panels"], activeforeground=light["radio_bg"], selectcolor=light["panels"])
-                    job_type_5.config(bg=light["bg"], fg=light["fg"], activebackground=light["panels"], activeforeground=light["radio_bg"], selectcolor=light["panels"])
-                    job_type_6.config(bg=light["bg"], fg=light["fg"], activebackground=light["panels"], activeforeground=light["radio_bg"], selectcolor=light["panels"])
-                    extra_upload_text.config(bg=light["bg"], fg=light["fg"])
-                    open_file_button.config(fg=light["fg"], bg=light["buttons"], activebackground=light["panels"], activeforeground=light["fg"])
-                    video_cap_button.config(fg=light["fg"], bg=light["buttons"], activebackground=light["panels"], activeforeground=light["fg"])
-                    screen_cap_button.config(fg=light["fg"], bg=light["buttons"], activebackground=light["panels"], activeforeground=light["fg"])
-                    picture_button.config(fg=light["fg"], bg=light["buttons"], activebackground=light["panels"], activeforeground=light["fg"])
-                    remove_button.config(fg=light["fg"], bg=light["buttons"], activebackground=light["panels"], activeforeground=light["fg"])
-                    itt_button.config(fg=light["fg"], bg=light["buttons"], activebackground=light["panels"], activeforeground=light["fg"])
-                    submit_time.config(bg=light["bg"], fg=light["fg"])
-                    job_text.config(bg=light["bg"], fg=light["fg"])
-                    job_no_text.config(bg=light["bg"], fg=light["fg"])
-                    name_text.config(bg=light["bg"], fg=light["fg"])
-                    name_set.config(bg=light["entry"], fg=light["fg"], highlightcolor=light["bg"], highlightbackground = light["highlight"], activebackground=light["select"])
-                    report_header.config(bg=light["bg"], fg=light["fg"])
-                    nav.config(bg=light["panels"])
-                    title.config(bg=light["panels"], fg=light["fg"])
-                    exit.config(fg=light["fg"], bg=light["panels"], activebackground=light["panels"], activeforeground=light["fg"])
-                    for text in file_text_array:
-                        text.config(bg=light["bg"])
+                themes = [dark, light]
+                is_theme = int(is_theme)
+                time_canvas.config(bg=themes[is_theme]["buttons"])
+                time_text.config(bg=themes[is_theme]["buttons"], fg=themes[is_theme]["fg"])
+                uk_text.config(bg=themes[is_theme]["buttons"], fg=themes[is_theme]["fg"])
+                uk_work.config(bg=themes[is_theme]["buttons"], fg=themes[is_theme]["fg"])
+                italy_text.config(bg=themes[is_theme]["buttons"], fg=themes[is_theme]["fg"])
+                italy_work.config(bg=themes[is_theme]["buttons"], fg=themes[is_theme]["fg"])
+                clear_button.config(fg=themes[is_theme]["fg"], bg=themes[is_theme]["buttons"], activebackground=themes[is_theme]["panels"], activeforeground=themes[is_theme]["fg"])
+                error_header.config(bg=themes[is_theme]["bg"], fg=themes[is_theme]["fg"])
+                error_canvas.config(bg=themes[is_theme]["panels"])
+                for error_text in error_text_list:
+                    error_text.config(bg=themes[is_theme]["panels"], fg=themes[is_theme]["fg"])
+                theme_slider.config(bg=themes[is_theme]["buttons"], activebackground=themes[is_theme]["buttons"], troughcolor=themes[is_theme]["panels"])
+                theme_text.config(bg=themes[is_theme]["bg"], fg=themes[is_theme]["fg"])
+                page.config(bg=themes[is_theme]["bg"])
+                bar.config(bg=themes[is_theme]["panels"])
+                info1.config(bg=themes[is_theme]["panels"], fg=themes[is_theme]["fg"])
+                info2.config(bg=themes[is_theme]["panels"], fg=themes[is_theme]["fg"])
+                info3.config(bg=themes[is_theme]["panels"], fg=themes[is_theme]["fg"])
+                login_header.config(bg=themes[is_theme]["bg"], fg=themes[is_theme]["fg"])
+                submit_button.config(fg=themes[is_theme]["fg"], bg=themes[is_theme]["buttons"], activebackground=themes[is_theme]["panels"], activeforeground=themes[is_theme]["fg"])
+                pdf_button.config(fg=themes[is_theme]["fg"], bg=themes[is_theme]["buttons"], activebackground=themes[is_theme]["panels"], activeforeground=themes[is_theme]["fg"])
+                lang_text.config(bg=themes[is_theme]["bg"], fg=themes[is_theme]["fg"])
+                lang_entry.config(bg=themes[is_theme]["entry"], fg=themes[is_theme]["fg"], highlightcolor=themes[is_theme]["bg"], highlightbackground = themes[is_theme]["highlight"])
+                description_text.config(bg=themes[is_theme]["bg"], fg=themes[is_theme]["fg"])
+                extra_text.config(bg=themes[is_theme]["bg"], fg=themes[is_theme]["fg"])
+                description.config(bg=themes[is_theme]["entry"], fg=themes[is_theme]["fg"], highlightcolor=themes[is_theme]["bg"], highlightbackground = themes[is_theme]["highlight"])
+                speech_button.config(fg=themes[is_theme]["fg"], bg=themes[is_theme]["buttons"], activebackground=themes[is_theme]["panels"], activeforeground=themes[is_theme]["fg"])
+                manufacturer.config(bg=themes[is_theme]["bg"], fg=themes[is_theme]["fg"])
+                manufacturer_set.config(bg=themes[is_theme]["entry"], fg=themes[is_theme]["fg"], highlightcolor=themes[is_theme]["bg"], highlightbackground = themes[is_theme]["highlight"], activebackground=themes[is_theme]["select"])
+                machine_model_text.config(bg=themes[is_theme]["bg"], fg=themes[is_theme]["fg"])
+                machine_model_input.config(bg=themes[is_theme]["entry"], fg=themes[is_theme]["fg"], highlightcolor=themes[is_theme]["bg"], highlightbackground = themes[is_theme]["highlight"])
+                machine_id_text.config(bg=themes[is_theme]["bg"], fg=themes[is_theme]["fg"])
+                machine_id_input.config(bg=themes[is_theme]["entry"], fg=themes[is_theme]["fg"], highlightcolor=themes[is_theme]["bg"], highlightbackground = themes[is_theme]["highlight"])
+                customer_name_text.config(bg=themes[is_theme]["bg"], fg=themes[is_theme]["fg"])
+                customer_name_input.config(bg=themes[is_theme]["entry"], fg=themes[is_theme]["fg"], highlightcolor=themes[is_theme]["bg"], highlightbackground = themes[is_theme]["highlight"])
+                contact_name_text.config(bg=themes[is_theme]["bg"], fg=themes[is_theme]["fg"])
+                contact_name_input.config(bg=themes[is_theme]["entry"], fg=themes[is_theme]["fg"], highlightcolor=themes[is_theme]["bg"], highlightbackground = themes[is_theme]["highlight"])
+                location_text.config(bg=themes[is_theme]["bg"], fg=themes[is_theme]["fg"])
+                location_input.config(bg=themes[is_theme]["entry"], fg=themes[is_theme]["fg"], highlightcolor=themes[is_theme]["bg"], highlightbackground = themes[is_theme]["highlight"])
+                customer_charge_text.config(bg=themes[is_theme]["bg"], fg=themes[is_theme]["fg"])
+                customer_charge_set.config(bg=themes[is_theme]["entry"], fg=themes[is_theme]["fg"], highlightcolor=themes[is_theme]["bg"], highlightbackground = themes[is_theme]["highlight"], activebackground=themes[is_theme]["select"])
+                job_type_text.config(bg=themes[is_theme]["bg"], fg=themes[is_theme]["fg"])
+                job_type_1.config(bg=themes[is_theme]["bg"], fg=themes[is_theme]["fg"], activebackground=themes[is_theme]["panels"], activeforeground=themes[is_theme]["radio_bg"], selectcolor=themes[is_theme]["panels"])
+                job_type_2.config(bg=themes[is_theme]["bg"], fg=themes[is_theme]["fg"], activebackground=themes[is_theme]["panels"], activeforeground=themes[is_theme]["radio_bg"], selectcolor=themes[is_theme]["panels"])
+                job_type_3.config(bg=themes[is_theme]["bg"], fg=themes[is_theme]["fg"], activebackground=themes[is_theme]["panels"], activeforeground=themes[is_theme]["radio_bg"], selectcolor=themes[is_theme]["panels"])
+                job_type_4.config(bg=themes[is_theme]["bg"], fg=themes[is_theme]["fg"], activebackground=themes[is_theme]["panels"], activeforeground=themes[is_theme]["radio_bg"], selectcolor=themes[is_theme]["panels"])
+                job_type_5.config(bg=themes[is_theme]["bg"], fg=themes[is_theme]["fg"], activebackground=themes[is_theme]["panels"], activeforeground=themes[is_theme]["radio_bg"], selectcolor=themes[is_theme]["panels"])
+                job_type_6.config(bg=themes[is_theme]["bg"], fg=themes[is_theme]["fg"], activebackground=themes[is_theme]["panels"], activeforeground=themes[is_theme]["radio_bg"], selectcolor=themes[is_theme]["panels"])
+                extra_upload_text.config(bg=themes[is_theme]["bg"], fg=themes[is_theme]["fg"])
+                open_file_button.config(fg=themes[is_theme]["fg"], bg=themes[is_theme]["buttons"], activebackground=themes[is_theme]["panels"], activeforeground=themes[is_theme]["fg"])
+                video_cap_button.config(fg=themes[is_theme]["fg"], bg=themes[is_theme]["buttons"], activebackground=themes[is_theme]["panels"], activeforeground=themes[is_theme]["fg"])
+                screen_cap_button.config(fg=themes[is_theme]["fg"], bg=themes[is_theme]["buttons"], activebackground=themes[is_theme]["panels"], activeforeground=themes[is_theme]["fg"])
+                picture_button.config(fg=themes[is_theme]["fg"], bg=themes[is_theme]["buttons"], activebackground=themes[is_theme]["panels"], activeforeground=themes[is_theme]["fg"])
+                remove_button.config(fg=themes[is_theme]["fg"], bg=themes[is_theme]["buttons"], activebackground=themes[is_theme]["panels"], activeforeground=themes[is_theme]["fg"])
+                itt_button.config(fg=themes[is_theme]["fg"], bg=themes[is_theme]["buttons"], activebackground=themes[is_theme]["panels"], activeforeground=themes[is_theme]["fg"])
+                submit_time.config(bg=themes[is_theme]["bg"], fg=themes[is_theme]["fg"])
+                job_text.config(bg=themes[is_theme]["bg"], fg=themes[is_theme]["fg"])
+                job_no_text.config(bg=themes[is_theme]["bg"], fg=themes[is_theme]["fg"])
+                name_text.config(bg=themes[is_theme]["bg"], fg=themes[is_theme]["fg"])
+                name_set.config(bg=themes[is_theme]["entry"], fg=themes[is_theme]["fg"], highlightcolor=themes[is_theme]["bg"], highlightbackground = themes[is_theme]["highlight"], activebackground=themes[is_theme]["select"])
+                report_header.config(bg=themes[is_theme]["bg"], fg=themes[is_theme]["fg"])
+                nav.config(bg=themes[is_theme]["panels"])
+                title.config(bg=themes[is_theme]["panels"], fg=themes[is_theme]["fg"])
+                exit.config(fg=themes[is_theme]["fg"], bg=themes[is_theme]["panels"], activebackground=themes[is_theme]["panels"], activeforeground=themes[is_theme]["fg"])
+                for text in file_text_array:
+                    text.config(bg=themes[is_theme]["bg"])
+                try:
+                    tries_text.config(bg=themes[is_theme]["bg"])
+                except:
+                    pass
+                try:
+                    update_text.config(bg=themes[is_theme]["bg"])
+                except:
+                    pass
+                try:
+                    ls_error_text.config(bg=themes[is_theme]["bg"])
+                except:
+                    pass
+                try:
+                    submit_text.config(bg=themes[is_theme]["bg"])
+                except:
+                    pass
+                try:
+                    file_text.config(bg=themes[is_theme]["bg"])
+                except:
+                    pass
+                try:
+                    bg_canvas.config(bg=themes[is_theme]["bg"])
+                except:
+                    pass
+                if locked == True:
+                    username_text.config(bg=themes[is_theme]["bg"], fg=themes[is_theme]["fg"])
+                    password_text.config(bg=themes[is_theme]["bg"], fg=themes[is_theme]["fg"])
+                    username_input.config(bg=themes[is_theme]["entry"], fg=themes[is_theme]["fg"], highlightcolor=themes[is_theme]["bg"], highlightbackground = themes[is_theme]["highlight"])
+                    password_input.config(bg=themes[is_theme]["entry"], fg=themes[is_theme]["fg"], highlightcolor=themes[is_theme]["bg"], highlightbackground = themes[is_theme]["highlight"])
+                    login_button.config(fg=themes[is_theme]["fg"], bg=themes[is_theme]["buttons"], activebackground=themes[is_theme]["panels"], activeforeground=themes[is_theme]["fg"])
+                if locked == False:
+                    welcome_text.config(bg=themes[is_theme]["bg"], fg=themes[is_theme]["fg"])
+                    about_text.config(bg=themes[is_theme]["bg"],  fg=themes[is_theme]["fg"])
+                    stats_header.config(bg=themes[is_theme]["bg"], fg=themes[is_theme]["fg"])
+                    latest_login.config(bg=themes[is_theme]["bg"], fg=themes[is_theme]["fg"])
+                    forms_sent.config(bg=themes[is_theme]["bg"], fg=themes[is_theme]["fg"])
+                    r_email_text.config(bg=themes[is_theme]["bg"], fg=themes[is_theme]["fg"])
+                    s_email_text.config(bg=themes[is_theme]["bg"], fg=themes[is_theme]["fg"])
+                    pass_text.config(bg=themes[is_theme]["bg"], fg=themes[is_theme]["fg"])
+                    r_email_entry.config(bg=themes[is_theme]["panels"], fg=themes[is_theme]["fg"], highlightcolor=themes[is_theme]["bg"], highlightbackground = themes[is_theme]["highlight"])
+                    s_email_entry.config(bg=themes[is_theme]["panels"], fg=themes[is_theme]["fg"], highlightcolor=themes[is_theme]["bg"], highlightbackground = themes[is_theme]["highlight"])
+                    email_password.config(bg=themes[is_theme]["panels"], fg=themes[is_theme]["fg"], highlightcolor=themes[is_theme]["bg"], highlightbackground = themes[is_theme]["highlight"])
+                    set_email.config(fg=themes[is_theme]["fg"], bg=themes[is_theme]["buttons"], activebackground=themes[is_theme]["panels"], activeforeground=themes[is_theme]["fg"])
+                    live_stream_header.config(bg=themes[is_theme]["bg"], fg=themes[is_theme]["fg"])
+                    ip_text.config(bg=themes[is_theme]["bg"],  fg=themes[is_theme]["fg"])
+                    ip_entry.config(bg=themes[is_theme]["panels"], fg=themes[is_theme]["fg"], highlightcolor=themes[is_theme]["bg"], highlightbackground = themes[is_theme]["highlight"])
+                    port_entry.config(bg=themes[is_theme]["panels"], fg=themes[is_theme]["fg"], highlightcolor=themes[is_theme]["bg"], highlightbackground = themes[is_theme]["highlight"])
+                    live_stream_button.config(fg=themes[is_theme]["fg"], bg=themes[is_theme]["buttons"], activebackground=themes[is_theme]["panels"], activeforeground=themes[is_theme]["fg"])
+                    prevous_text.config(bg=themes[is_theme]["bg"], fg=themes[is_theme]["fg"])
+                    for element in elements:
+                        element.config(bg=themes[is_theme]["bg"], fg=themes[is_theme]["fg"])
+                    table_canvas.config(bg=themes[is_theme]["bg"])
                     try:
-                        tries_text.config(bg=light["bg"])
+                        table_error_text.config(bg=themes[is_theme]["bg"], fg=themes[is_theme]["fg"])
                     except:
                         pass
                     try:
-                        update_text.config(bg=light["bg"])
+                        subject_text.config(bg=themes[is_theme]["bg"],  fg=themes[is_theme]["fg"])
                     except:
                         pass
                     try:
-                        ls_error_text.config(bg=light["bg"])
+                        email_message_text.config(bg=themes[is_theme]["bg"],  fg=themes[is_theme]["fg"])
                     except:
                         pass
                     try:
-                        submit_text.config(bg=light["bg"])
+                        message_header.config(bg=themes[is_theme]["bg"],  fg=themes[is_theme]["fg"])
                     except:
                         pass
                     try:
-                        file_text.config(bg=light["bg"])
+                        sms_message_text.config(bg=themes[is_theme]["bg"],  fg=themes[is_theme]["fg"])
                     except:
                         pass
                     try:
-                        bg_canvas.config(bg=light["bg"])
-                    except:
-                        pass
-                    if locked == True:
-                        username_text.config(bg=light["bg"], fg=light["fg"])
-                        password_text.config(bg=light["bg"], fg=light["fg"])
-                        username_input.config(bg=light["entry"], fg=light["fg"], highlightcolor=light["bg"], highlightbackground = light["highlight"])
-                        password_input.config(bg=light["entry"], fg=light["fg"], highlightcolor=light["bg"], highlightbackground = light["highlight"])
-                        login_button.config(fg=light["fg"], bg=light["buttons"], activebackground=light["panels"], activeforeground=light["fg"])
-                    if locked == False:
-                        welcome_text.config(bg=light["bg"], fg=light["fg"])
-                        about_text.config(bg=light["bg"],  fg=light["fg"])
-                        stats_header.config(bg=light["bg"], fg=light["fg"])
-                        latest_login.config(bg=light["bg"], fg=light["fg"])
-                        forms_sent.config(bg=light["bg"], fg=light["fg"])
-                        r_email_text.config(bg=light["bg"], fg=light["fg"])
-                        s_email_text.config(bg=light["bg"], fg=light["fg"])
-                        pass_text.config(bg=light["bg"], fg=light["fg"])
-                        r_email_entry.config(bg=light["panels"], fg=light["fg"], highlightcolor=light["bg"], highlightbackground = light["highlight"])
-                        s_email_entry.config(bg=light["panels"], fg=light["fg"], highlightcolor=light["bg"], highlightbackground = light["highlight"])
-                        email_password.config(bg=light["panels"], fg=light["fg"], highlightcolor=light["bg"], highlightbackground = light["highlight"])
-                        set_email.config(fg=light["fg"], bg=light["buttons"], activebackground=light["panels"], activeforeground=light["fg"])
-                        live_stream_header.config(bg=light["bg"], fg=light["fg"])
-                        ip_text.config(bg=light["bg"],  fg=light["fg"])
-                        ip_entry.config(bg=light["panels"], fg=light["fg"], highlightcolor=light["bg"], highlightbackground = light["highlight"])
-                        port_entry.config(bg=light["panels"], fg=light["fg"], highlightcolor=light["bg"], highlightbackground = light["highlight"])
-                        live_stream_button.config(fg=light["fg"], bg=light["buttons"], activebackground=light["panels"], activeforeground=light["fg"])
-                        prevous_text.config(bg=light["bg"], fg=light["fg"])
-                        for element in elements:
-                            element.config(bg=light["bg"], fg=light["fg"])
-                        table_canvas.config(bg=light["bg"])
-                        try:
-                            table_error_text.config(bg=light["bg"], fg=light["fg"])
-                        except:
-                            pass
-                        try:
-                            subject_text.config(bg=light["bg"],  fg=light["fg"])
-                        except:
-                            pass
-                        try:
-                            email_message_text.config(bg=light["bg"],  fg=light["fg"])
-                        except:
-                            pass
-                        try:
-                            message_header.config(bg=light["bg"],  fg=light["fg"])
-                        except:
-                            pass
-                        try:
-                            sms_message_text.config(bg=light["bg"],  fg=light["fg"])
-                        except:
-                            pass
-                        try:
-                            email_back_button.config(fg=light["fg"], bg=light["buttons"], activebackground=light["panels"], activeforeground=light["fg"])
-                        except:
-                            pass
-                        try:
-                            email_speech_button.config(fg=light["fg"], bg=light["buttons"], activebackground=light["panels"], activeforeground=light["fg"])
-                        except:
-                            pass
-                        try:
-                            send_email_button.config(fg=light["fg"], bg=light["buttons"], activebackground=light["panels"], activeforeground=light["fg"])
-                        except:
-                            pass
-                        try:
-                            email_button.config(fg=light["fg"], bg=light["buttons"], activebackground=light["panels"], activeforeground=light["fg"])
-                        except:
-                            pass
-                        try:
-                            sms_button.config(fg=light["fg"], bg=light["buttons"], activebackground=light["panels"], activeforeground=light["fg"])
-                        except:
-                            pass
-                        try:
-                            sms_back_button.config(fg=light["fg"], bg=light["buttons"], activebackground=light["panels"], activeforeground=light["fg"])
-                        except:
-                            pass
-                        try:
-                            sms_speech_button.config(fg=light["fg"], bg=light["buttons"], activebackground=light["panels"], activeforeground=light["fg"])
-                        except:
-                            pass
-                        try:
-                            send_sms_button.config(fg=light["fg"], bg=light["buttons"], activebackground=light["panels"], activeforeground=light["fg"])
-                        except:
-                            pass
-                        try:
-                            email_subject_entry.config(bg=light["panels"], fg=light["fg"], highlightcolor=light["bg"], highlightbackground = light["highlight"])
-                        except:
-                            pass
-                        try:
-                            email_message.config(bg=light["panels"], fg=light["fg"], highlightcolor=light["bg"], highlightbackground = light["highlight"])
-                        except:
-                            pass
-                        try:
-                            sms_message.config(bg=light["panels"], fg=light["fg"], highlightcolor=light["bg"], highlightbackground = light["highlight"])
-                        except:
-                            pass
-
-                if is_theme == "0":
-                    time_canvas.config(bg=dark["buttons"])
-                    time_text.config(bg=dark["buttons"], fg=dark["fg"])
-                    uk_text.config(bg=dark["buttons"], fg=dark["fg"])
-                    uk_work.config(bg=dark["buttons"], fg=dark["fg"])
-                    italy_text.config(bg=dark["buttons"], fg=dark["fg"])
-                    italy_work.config(bg=dark["buttons"], fg=dark["fg"])
-                    clear_button.config(fg=dark["fg"], bg=dark["buttons"], activebackground=dark["panels"], activeforeground=dark["fg"])
-                    error_header.config(bg=dark["bg"], fg=dark["fg"])
-                    error_canvas.config(bg=dark["panels"])
-                    for error_text in error_text_list:
-                        error_text.config(bg=dark["panels"], fg=dark["fg"])
-                    theme_slider.config(bg=dark["buttons"], activebackground=dark["buttons"], troughcolor=dark["panels"])
-                    theme_text.config(bg=dark["bg"], fg=dark["fg"])
-                    page.config(bg=dark["bg"])
-                    bar.config(bg=dark["panels"])
-                    info1.config(bg=dark["panels"], fg=dark["fg"])
-                    info2.config(bg=dark["panels"], fg=dark["fg"])
-                    info3.config(bg=dark["panels"], fg=dark["fg"])
-                    login_header.config(bg=dark["bg"], fg=dark["fg"])
-                    submit_button.config(fg=dark["fg"], bg=dark["buttons"], activebackground=dark["panels"], activeforeground=dark["fg"])
-                    pdf_button.config(fg=dark["fg"], bg=dark["buttons"], activebackground=dark["panels"], activeforeground=dark["fg"])
-                    lang_text.config(bg=dark["bg"], fg=dark["fg"])
-                    lang_entry.config(bg=dark["entry"], fg=dark["fg"], highlightcolor=dark["bg"], highlightbackground = dark["highlight"])
-                    description_text.config(bg=dark["bg"], fg=dark["fg"])
-                    extra_text.config(bg=dark["bg"], fg=dark["fg"])
-                    description.config(bg=dark["entry"], fg=dark["fg"], highlightcolor=dark["bg"], highlightbackground = dark["highlight"])
-                    speech_button.config(fg=dark["fg"], bg=dark["buttons"], activebackground=dark["panels"], activeforeground=dark["fg"])
-                    manufacturer.config(bg=dark["bg"], fg=dark["fg"])
-                    manufacturer_set.config(bg=dark["entry"], fg=dark["fg"], highlightcolor=dark["bg"], highlightbackground = dark["highlight"], activebackground=dark["select"])
-                    machine_model_text.config(bg=dark["bg"], fg=dark["fg"])
-                    machine_model_input.config(bg=dark["entry"], fg=dark["fg"], highlightcolor=dark["bg"], highlightbackground = dark["highlight"])
-                    machine_id_text.config(bg=dark["bg"], fg=dark["fg"])
-                    machine_id_input.config(bg=dark["entry"], fg=dark["fg"], highlightcolor=dark["bg"], highlightbackground = dark["highlight"])
-                    customer_name_text.config(bg=dark["bg"], fg=dark["fg"])
-                    customer_name_input.config(bg=dark["entry"], fg=dark["fg"], highlightcolor=dark["bg"], highlightbackground = dark["highlight"])
-                    contact_name_text.config(bg=dark["bg"], fg=dark["fg"])
-                    contact_name_input.config(bg=dark["entry"], fg=dark["fg"], highlightcolor=dark["bg"], highlightbackground = dark["highlight"])
-                    location_text.config(bg=dark["bg"], fg=dark["fg"])
-                    location_input.config(bg=dark["entry"], fg=dark["fg"], highlightcolor=dark["bg"], highlightbackground = dark["highlight"])
-                    customer_charge_text.config(bg=dark["bg"], fg=dark["fg"])
-                    customer_charge_set.config(bg=dark["entry"], fg=dark["fg"], highlightcolor=dark["bg"], highlightbackground = dark["highlight"], activebackground=dark["select"])
-                    job_type_text.config(bg=dark["bg"], fg=dark["fg"])
-                    job_type_1.config(bg=dark["bg"], fg=dark["fg"], activebackground=dark["panels"], activeforeground=dark["radio_bg"], selectcolor=dark["panels"])
-                    job_type_2.config(bg=dark["bg"], fg=dark["fg"], activebackground=dark["panels"], activeforeground=dark["radio_bg"], selectcolor=dark["panels"])
-                    job_type_3.config(bg=dark["bg"], fg=dark["fg"], activebackground=dark["panels"], activeforeground=dark["radio_bg"], selectcolor=dark["panels"])
-                    job_type_4.config(bg=dark["bg"], fg=dark["fg"], activebackground=dark["panels"], activeforeground=dark["radio_bg"], selectcolor=dark["panels"])
-                    job_type_5.config(bg=dark["bg"], fg=dark["fg"], activebackground=dark["panels"], activeforeground=dark["radio_bg"], selectcolor=dark["panels"])
-                    job_type_6.config(bg=dark["bg"], fg=dark["fg"], activebackground=dark["panels"], activeforeground=dark["radio_bg"], selectcolor=dark["panels"])
-                    extra_upload_text.config(bg=dark["bg"], fg=dark["fg"])
-                    open_file_button.config(fg=dark["fg"], bg=dark["buttons"], activebackground=dark["panels"], activeforeground=dark["fg"])
-                    video_cap_button.config(fg=dark["fg"], bg=dark["buttons"], activebackground=dark["panels"], activeforeground=dark["fg"])
-                    screen_cap_button.config(fg=dark["fg"], bg=dark["buttons"], activebackground=dark["panels"], activeforeground=dark["fg"])
-                    picture_button.config(fg=dark["fg"], bg=dark["buttons"], activebackground=dark["panels"], activeforeground=dark["fg"])
-                    remove_button.config(fg=dark["fg"], bg=dark["buttons"], activebackground=dark["panels"], activeforeground=dark["fg"])
-                    itt_button.config(fg=dark["fg"], bg=dark["buttons"], activebackground=dark["panels"], activeforeground=dark["fg"])
-                    submit_time.config(bg=dark["bg"], fg=dark["fg"])
-                    job_text.config(bg=dark["bg"], fg=dark["fg"])
-                    job_no_text.config(bg=dark["bg"], fg=dark["fg"])
-                    name_text.config(bg=dark["bg"], fg=dark["fg"])
-                    name_set.config(bg=dark["entry"], fg=dark["fg"], highlightcolor=dark["bg"], highlightbackground = dark["highlight"], activebackground=dark["select"])
-                    report_header.config(bg=dark["bg"], fg=dark["fg"])
-                    nav.config(bg=dark["panels"])
-                    title.config(bg=dark["panels"], fg=dark["fg"])
-                    exit.config(fg=dark["fg"], bg=dark["panels"], activebackground=dark["panels"], activeforeground=dark["fg"])
-                    for text in file_text_array:
-                        text.config(bg=dark["bg"])
-                    try:
-                        tries_text.config(bg=dark["bg"])
+                        email_back_button.config(fg=themes[is_theme]["fg"], bg=themes[is_theme]["buttons"], activebackground=themes[is_theme]["panels"], activeforeground=themes[is_theme]["fg"])
                     except:
                         pass
                     try:
-                        update_text.config(bg=dark["bg"])
+                        email_speech_button.config(fg=themes[is_theme]["fg"], bg=themes[is_theme]["buttons"], activebackground=themes[is_theme]["panels"], activeforeground=themes[is_theme]["fg"])
                     except:
                         pass
                     try:
-                        ls_error_text.config(bg=dark["bg"])
+                        send_email_button.config(fg=themes[is_theme]["fg"], bg=themes[is_theme]["buttons"], activebackground=themes[is_theme]["panels"], activeforeground=themes[is_theme]["fg"])
                     except:
                         pass
                     try:
-                        submit_text.config(bg=dark["bg"])
+                        email_button.config(fg=themes[is_theme]["fg"], bg=themes[is_theme]["buttons"], activebackground=themes[is_theme]["panels"], activeforeground=themes[is_theme]["fg"])
                     except:
                         pass
                     try:
-                        file_text.config(bg=dark["bg"])
+                        sms_button.config(fg=themes[is_theme]["fg"], bg=themes[is_theme]["buttons"], activebackground=themes[is_theme]["panels"], activeforeground=themes[is_theme]["fg"])
                     except:
                         pass
                     try:
-                        bg_canvas.config(bg=dark["bg"])
+                        sms_back_button.config(fg=themes[is_theme]["fg"], bg=themes[is_theme]["buttons"], activebackground=themes[is_theme]["panels"], activeforeground=themes[is_theme]["fg"])
                     except:
                         pass
-                    if locked == True:
-                        username_text.config(bg=dark["bg"], fg=dark["fg"])
-                        password_text.config(bg=dark["bg"], fg=dark["fg"])
-                        username_input.config(bg=dark["entry"], fg=dark["fg"], highlightcolor=dark["bg"], highlightbackground = dark["highlight"])
-                        password_input.config(bg=dark["entry"], fg=dark["fg"], highlightcolor=dark["bg"], highlightbackground = dark["highlight"])
-                        login_button.config(fg=dark["fg"], bg=dark["buttons"], activebackground=dark["panels"], activeforeground=dark["fg"])
-                    if locked == False:
-                        welcome_text.config(bg=dark["bg"], fg=dark["fg"])
-                        about_text.config(bg=dark["bg"],  fg=dark["fg"])
-                        stats_header.config(bg=dark["bg"], fg=dark["fg"])
-                        latest_login.config(bg=dark["bg"], fg=dark["fg"])
-                        forms_sent.config(bg=dark["bg"], fg=dark["fg"])
-                        r_email_text.config(bg=dark["bg"], fg=dark["fg"])
-                        s_email_text.config(bg=dark["bg"], fg=dark["fg"])
-                        pass_text.config(bg=dark["bg"], fg=dark["fg"])
-                        r_email_entry.config(bg=dark["buttons"], fg=dark["fg"], highlightcolor=dark["bg"], highlightbackground = dark["highlight"])
-                        s_email_entry.config(bg=dark["buttons"], fg=dark["fg"], highlightcolor=dark["bg"], highlightbackground = dark["highlight"])
-                        email_password.config(bg=dark["buttons"], fg=dark["fg"], highlightcolor=dark["bg"], highlightbackground = dark["highlight"])
-                        set_email.config(fg=dark["fg"], bg=dark["buttons"], activebackground=dark["panels"], activeforeground=dark["fg"])
-                        live_stream_header.config(bg=dark["bg"], fg=dark["fg"])
-                        ip_text.config(bg=dark["bg"],  fg=dark["fg"])
-                        ip_entry.config(bg=dark["buttons"], fg=dark["fg"], highlightcolor=dark["bg"], highlightbackground = dark["highlight"])
-                        port_entry.config(bg=dark["buttons"], fg=dark["fg"], highlightcolor=dark["bg"], highlightbackground = dark["highlight"])
-                        live_stream_button.config(fg=dark["fg"], bg=dark["buttons"], activebackground=dark["panels"], activeforeground=dark["fg"])
-                        prevous_text.config(bg=dark["bg"], fg=dark["fg"])
-                        for element in elements:
-                            element.config(bg=dark["bg"], fg=dark["fg"])
-                        table_canvas.config(bg=dark["bg"])
-                        try:
-                            table_error_text.config(bg=dark["bg"], fg=dark["fg"])
-                        except:
-                            pass
-                        try:
-                            subject_text.config(bg=dark["bg"],  fg=dark["fg"])
-                        except:
-                            pass
-                        try:
-                            email_message_text.config(bg=dark["bg"],  fg=dark["fg"])
-                        except:
-                            pass
-                        try:
-                            message_header.config(bg=dark["bg"],  fg=dark["fg"])
-                        except:
-                            pass
-                        try:
-                            sms_message_text.config(bg=dark["bg"],  fg=dark["fg"])
-                        except:
-                            pass
-                        try:
-                            email_back_button.config(fg=dark["fg"], bg=dark["buttons"], activebackground=dark["panels"], activeforeground=dark["fg"])
-                        except:
-                            pass
-                        try:
-                            email_speech_button.config(fg=dark["fg"], bg=dark["buttons"], activebackground=dark["panels"], activeforeground=dark["fg"])
-                        except:
-                            pass
-                        try:
-                            send_email_button.config(fg=dark["fg"], bg=dark["buttons"], activebackground=dark["panels"], activeforeground=dark["fg"])
-                        except:
-                            pass
-                        try:
-                            email_button.config(fg=dark["fg"], bg=dark["buttons"], activebackground=dark["panels"], activeforeground=dark["fg"])
-                        except:
-                            pass
-                        try:
-                            sms_button.config(fg=dark["fg"], bg=dark["buttons"], activebackground=dark["panels"], activeforeground=dark["fg"])
-                        except:
-                            pass
-                        try:
-                            sms_back_button.config(fg=dark["fg"], bg=dark["buttons"], activebackground=dark["panels"], activeforeground=dark["fg"])
-                        except:
-                            pass
-                        try:
-                            sms_speech_button.config(fg=dark["fg"], bg=dark["buttons"], activebackground=dark["panels"], activeforeground=dark["fg"])
-                        except:
-                            pass
-                        try:
-                            send_sms_button.config(fg=dark["fg"], bg=dark["buttons"], activebackground=dark["panels"], activeforeground=dark["fg"])
-                        except:
-                            pass
-                        try:
-                            email_subject_entry.config(bg=dark["buttons"], fg=dark["fg"], highlightcolor=dark["bg"], highlightbackground = dark["highlight"])
-                        except:
-                            pass
-                        try:
-                            email_message.config(bg=dark["buttons"], fg=dark["fg"], highlightcolor=dark["bg"], highlightbackground = dark["highlight"])
-                        except:
-                            pass
-                        try:
-                            sms_message.config(bg=dark["buttons"], fg=dark["fg"], highlightcolor=dark["bg"], highlightbackground = dark["highlight"])
-                        except:
-                            pass
+                    try:
+                        sms_speech_button.config(fg=themes[is_theme]["fg"], bg=themes[is_theme]["buttons"], activebackground=themes[is_theme]["panels"], activeforeground=themes[is_theme]["fg"])
+                    except:
+                        pass
+                    try:
+                        send_sms_button.config(fg=themes[is_theme]["fg"], bg=themes[is_theme]["buttons"], activebackground=themes[is_theme]["panels"], activeforeground=themes[is_theme]["fg"])
+                    except:
+                        pass
+                    try:
+                        email_subject_entry.config(bg=themes[is_theme]["panels"], fg=themes[is_theme]["fg"], highlightcolor=themes[is_theme]["bg"], highlightbackground = themes[is_theme]["highlight"])
+                    except:
+                        pass
+                    try:
+                        email_message.config(bg=themes[is_theme]["panels"], fg=themes[is_theme]["fg"], highlightcolor=themes[is_theme]["bg"], highlightbackground = themes[is_theme]["highlight"])
+                    except:
+                        pass
+                    try:
+                        sms_message.config(bg=themes[is_theme]["panels"], fg=themes[is_theme]["fg"], highlightcolor=themes[is_theme]["bg"], highlightbackground = themes[is_theme]["highlight"])
+                    except:
+                        pass
 
             def setup():
                 global page
