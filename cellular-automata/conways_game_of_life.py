@@ -1,7 +1,8 @@
 """
-Python Implimentation of Conway's Game Of Life
-Developed by Fraser Love
+Conway's Game Of Life Cellular Automaton
+Developed by Fraser Love on 26/09/18
 Dependencies: Pygame
+Ran on CPU - Reccomended to use on High-Range CPU
 """
 
 import pygame, sys, random
