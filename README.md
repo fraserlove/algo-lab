@@ -19,6 +19,13 @@ Mathematical systems used to represent cellular life
 - Wire World
 - Langton's Ant
 - Brian's Brain
+
+## Games
+A variety of games made in python
+
+### Includes:
+
+- Snake
     
 ## Tools
 General purpose programs designed to carry out a specific task
