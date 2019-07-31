@@ -41,6 +41,7 @@ General purpose programs designed to carry out a specific task
 - Random Binary File Generator
 - Random Text File Generator
 - Prime Number Search
+- ASCII to Base64 Encoder and Decoder
 
 ## EES Project
 Project files for a school engineering task to design a more effective way of communication between company and clients
