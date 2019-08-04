@@ -11,6 +11,9 @@ bucket sort. One note for the visualisation of merge sort is that because is spl
 combines the arrays it was difficult to fully visualise. Instead the current arrays being
 merged are shown.
 
+Usage - After typing in the name of this script enter the name of the sorting algorithm you
+want to use in CamelCase with no spaces.
+
 Note - This visualiser only for understanding how sorting algorithms work
 and should not be used to compare time complexities as most of the time
 spent by the program is drawing the array on screen and not on sorting
