@@ -8,6 +8,28 @@ Computer models and simulations of Hamltonian and complex systems
 
 - 2D Gravity Simulation
 - Solar System Simulation
+
+## Data Structures and Algorithms
+Code for certain data structures and algorithms I have built
+
+### Includes:
+
+- Sorting algorithms:
+  - Selection
+  - Bubble
+  - Insertion
+  - Shell
+  - Radix
+  - Cocktail
+  - Merge
+  - Bitonic
+  - Quick
+  - Heap
+  - Bucket
+- Sorting Algorithm Time Complexity Graph
+- Sorting Algorithm Visualiser
+
+### Includes:
    
 ## Cellular Automata
 Mathematical systems used to represent cellular life
