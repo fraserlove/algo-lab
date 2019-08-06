@@ -28,8 +28,6 @@ Code for certain data structures and algorithms I have built
   - Bucket
 - Sorting Algorithm Time Complexity Graph
 - Sorting Algorithm Visualiser
-
-### Includes:
    
 ## Cellular Automata
 Mathematical systems used to represent cellular life
