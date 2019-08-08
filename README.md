@@ -65,6 +65,7 @@ General purpose programs designed to carry out a specific task
 - Prime Number Search
 - ASCII to Base64 Encoder and Decoder
 - MD5 Hash Generator
+- Huffman Coding Compression and Decompression
 
 ## EES Project
 Project files for a school engineering task to design a more effective way of communication between company and clients
