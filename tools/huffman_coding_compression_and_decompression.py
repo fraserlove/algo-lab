@@ -4,11 +4,11 @@ Huffman Compression and Decompression Program
 Created 08/08/19
 Developed by Fraser Love
 
-This program compresses and decompresses .txt files using huffman compression and huffman trees.For compression the prgram generates a frequency dictionary based
+This program compresses and decompresses any text based files using huffman compression and huffman trees.For compression the prgram generates a frequency dictionary based
 on the frequency of characters in the text file. A heap is then created and is used to calculate codes to for each character. The text is then encoded
 with these codes and extra padding applied. Also the program stores the codes within the .bin file so that for decomression no extra input is needed.
 The .bin file is then created and the bits are written to the file. For decompression the program uses the codes stored within the .bin file to decode the binary
-and then it removes the padding and then writes the text to a .txt file.
+and then it removes the padding and then writes the text to a file with the same file extention as before.
 
 Usage - The program is run via the command line. The arguments are as follows:
 
@@ -95,6 +95,15 @@ class HuffmanCoding:
         encoded_text = tree_length + encoded_text
         return encoded_text
 
+    def store_file_extention(self, encoded_text):
+        """Stores the file extention with the encoded text so that it can be decompressed back to its original file format """
+        file_extention = os.path.splitext(self.path)[1]
+        extention_length = "{:016b}".format(len(file_extention))
+        for char in file_extention:
+            encoded_text = "{:08b}".format(ord(char)) + encoded_text
+        encoded_text = extention_length + encoded_text
+        return encoded_text
+
     def padding_text(self, encoded_text):
         padding = 8 - (len(encoded_text) % 8)
         padding_length = "{:08b}".format(padding)
@@ -112,7 +121,7 @@ class HuffmanCoding:
 
     def compress(self):
         start_time = time.time()
-        """ Opening the .txt file and running through all functions to compress the text then writing the encoded text to a .bin file """
+        """ Opening the file and running through all functions to compress the text then writing the encoded text to a .bin file """
         filename = os.path.splitext(self.path)[0]
         output_path = filename + ".bin"
         with open(self.path, "r+") as file, open(output_path, "wb") as output:
@@ -121,10 +130,10 @@ class HuffmanCoding:
             self.gen_heap()
             self.merge_nodes()
             self.gen_codes()
-            encoded_text = self.padding_text(self.store_tree(self.encode_text(text)))
+            encoded_text = self.padding_text(self.store_file_extention(self.store_tree(self.encode_text(text))))
             binary = self.gen_bytes(encoded_text)
             output.write(bytes(binary))
-        original_size = os.path.getsize(filename + ".txt")
+        original_size = os.path.getsize(self.path)
         new_size = os.path.getsize(output_path)
         prefixes = ["B", "KB", "MB", "GB"]
         prefix_index = 0
@@ -132,8 +141,8 @@ class HuffmanCoding:
             original_size /= 1000
             new_size /= 1000
             prefix_index += 1
-        print("\nCompressed: {} in {:.3f}s".format(filename + ".txt", time.time()-start_time))
-        print("\nOriginal Filesize: {:.2f} {}\nNew Filesize: {:.2f} {}\nCompression Percentage: {:.2f}%".format(original_size, prefixes[prefix_index], new_size, prefixes[prefix_index], os.path.getsize(output_path)/os.path.getsize(filename + ".txt")*100))
+        print("\nCompressed: {} in {:.3f}s".format(self.path, time.time()-start_time))
+        print("\nOriginal Filesize: {:.2f} {}\nNew Filesize: {:.2f} {}\nCompression Percentage: {:.2f}%".format(original_size, prefixes[prefix_index], new_size, prefixes[prefix_index], os.path.getsize(output_path)/os.path.getsize(self.path)*100))
 
     """ Decompression Functions """
 
@@ -142,6 +151,17 @@ class HuffmanCoding:
         encoded_text = encoded_text[8:]
         encoded_text = encoded_text[:-1*padding_length]
         return encoded_text
+
+    def reconstruct_file_extention(self, encoded_text):
+        """ Reconstructing the stored file extention to maintain the original file type """
+        extention = []
+        extention_length = int(encoded_text[:16],2)
+        encoded_text = encoded_text[16:]
+        for i in range(0, extention_length*8, 8):
+            extention.append(chr(int(encoded_text[i:i+8],2)))
+        extention = "".join(extention[::-1])
+        encoded_text = encoded_text[8*extention_length:]
+        return encoded_text, extention
 
     def reconstruct_tree(self, encoded_text):
         """ Using the stored codes in the .bin file to reconstruct the code table to decode the text """
@@ -176,20 +196,22 @@ class HuffmanCoding:
 
     def decompress(self):
         start_time = time.time()
-        """ Opening the .bin file then decoding the binary into text and finally outputting the result to a new .txt file """
+        """ Opening the .bin file then decoding the binary into text and finally outputting the result to a new file """
         filename = os.path.splitext(self.path)[0]
-        output_path = filename + ".txt"
-        with open(self.path, "rb") as file, open(output_path, "w") as output:
+        with open(self.path, "rb") as file:
             bits = ""
             byte = file.read(1)
             while byte != b"":
                 byte = ord(byte)
                 bits += "{:08b}".format(byte)
                 byte = file.read(1)
-            encoded_text = self.reconstruct_tree(self.remove_padding(bits))
+            encoded_text = self.remove_padding(bits)
+            encoded_text, file_extention = self.reconstruct_file_extention(encoded_text)
+            encoded_text = self.reconstruct_tree(encoded_text)
             text = self.decode_text(encoded_text)
+        with open(filename + file_extention, "w") as output:
             output.write(text)
-        print("\nDecompressed: {} in {:.3f}s".format(filename + ".bin", time.time()-start_time))
+        print("\nDecompressed: {} in {:.3f}s".format(filename + file_extention, time.time()-start_time))
 
 
 def main():
@@ -202,7 +224,7 @@ def main():
                     if "-r" in sys.argv or "--remove" in sys.argv:
                         os.remove(sys.argv[2])
                 else:
-                    print("Error: Please provide a path to the .txt file to compress")
+                    print("Error: Please provide a path to the file to compress")
             except:
                 print("Error: invalid path")
 
