@@ -142,7 +142,7 @@ class HuffmanCoding:
             new_size /= 1000
             prefix_index += 1
         print("\nCompressed: {} in {:.3f}s".format(self.path, time.time()-start_time))
-        print("\nOriginal Filesize: {:.2f} {}\nNew Filesize: {:.2f} {}\nCompression Percentage: {:.2f}%".format(original_size, prefixes[prefix_index], new_size, prefixes[prefix_index], os.path.getsize(output_path)/os.path.getsize(self.path)*100))
+        print("\nOriginal Filesize: {:.2f} {}\nNew Filesize: {:.2f} {}\nCompression Ratio: {:.2f}%".format(original_size, prefixes[prefix_index], new_size, prefixes[prefix_index], 100 - (os.path.getsize(output_path)/os.path.getsize(self.path)*100)))
 
     """ Decompression Functions """
 
