@@ -8,6 +8,7 @@ Computer models and simulations of Hamltonian and complex systems
 
 - 2D Gravity Simulation
 - Solar System Simulation
+- Perlin Noise Terrain Generator
 
 ## Data Structures and Algorithms
 Code for certain data structures and algorithms I have built
