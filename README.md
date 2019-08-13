@@ -11,7 +11,7 @@ Computer models and simulations of Hamltonian and complex systems
 - Perlin Noise Terrain Generator
 ![alt text](https://github.com/FraserLove/images/blob/master/Screenshot%20from%202019-08-12%2023-38-50.png)
 - Perlin Noise Flow Field
-![alt text](https://github.com/FraserLove/images/blob/master/Screenshot%20from%202019-08-13%2021-01-23.png)
+![alt text](https://github.com/FraserLove/images/blob/master/Screenshot%20from%202019-08-13%2021-02-45.png)
 
 ## Data Structures and Algorithms
 Code for certain data structures and algorithms I have built
