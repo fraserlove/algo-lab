@@ -12,6 +12,8 @@ Computer models and simulations of Hamltonian and complex systems
 ![alt text](https://github.com/FraserLove/images/blob/master/Screenshot%20from%202019-08-12%2023-38-50.png)
 - Perlin Noise Flow Field (No Trails)
 ![alt text](https://github.com/FraserLove/images/blob/master/Screenshot%20from%202019-08-13%2021-02-45.png)
+- Perlin Noise Flow Field (With Trails)
+![alt_text](https://github.com/FraserLove/images/blob/master/Screenshot%20from%202019-08-13%2022-23-37.png)
 
 ## Data Structures and Algorithms
 Code for certain data structures and algorithms I have built
