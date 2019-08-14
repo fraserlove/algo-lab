@@ -32,6 +32,7 @@ class Display:
     def setup(self):
         """ Setting up the display and storing our initial root branch """
         self.display.fill(bg_colour)
+        pygame.display.set_caption("Fractal Tree Generator")
         a = branch.Vector(self.dimensions[0]/2, self.dimensions[1])
         b = branch.Vector(self.dimensions[0]/2, self.dimensions[1] - branch_size)
         self.root = branch.Branch(a, b)
