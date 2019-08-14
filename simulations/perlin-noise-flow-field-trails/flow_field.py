@@ -71,7 +71,7 @@ class Display:
         for particle in self.particles:
             particle.update()
             particle.follow(self.flowfield)
-            pygame.draw.rect(self.display, colour, (int(particle.pos.x), int(particle.pos.y), particle_size, particle_size))#
+            pygame.draw.rect(self.display, colour, (int(particle.pos.x), int(particle.pos.y), particle_size, particle_size))
             if not draw_flow_field:
                 pygame.draw.aaline(self.display, colour, (particle.pos.x, particle.pos.y), (particle.prev_pos.x, particle.prev_pos.y), 1)
 
