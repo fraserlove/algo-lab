@@ -15,7 +15,7 @@ Computer models and simulations of Hamltonian and complex systems
 - Perlin Noise Flow Field (With Trails)
 ![alt_text](https://github.com/FraserLove/images/blob/master/Screenshot%20from%202019-08-13%2022-23-37.png)
 - Fractal Tree Generator
-![alt_text](https://github.com/FraserLove/images/blob/master/Screenshot%20from%202019-08-14%2022-08-14.png)
+![alt_text](https://github.com/FraserLove/images/blob/master/Screenshot%20from%202019-08-14%2022-31-22.png)
 
 ## Data Structures and Algorithms
 Code for certain data structures and algorithms I have built
