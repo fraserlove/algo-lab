@@ -1,3 +1,7 @@
+"""
+Developed by Fraser Love
+On 22/08/19
+"""
 from qiskit import QuantumCircuit, visualization, execute, IBMQ, Aer
 import matplotlib.pyplot as pl
 
