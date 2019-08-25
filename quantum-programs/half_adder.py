@@ -29,4 +29,4 @@ counts = result.get_counts(qc)
 # Displaying results on screen and creating a histogram
 print(counts)
 plot = visualization.plot_histogram(counts)
-plot.savefig('/Users/fraser/Desktop/test.png')
+plot.savefig('half_adder.png')
