@@ -98,8 +98,7 @@ Contains programs worked on at school for Higher and N5, includes different algo
 
 ## CodeWars Scripts
 Solutions to code for the coding challange website codewars. My codewars account:
-![alt text](https://www.codewars.com/users/Fraser%20L/badges/large)  
-https://www.codewars.com/users/Fraser%20L
+<a href=https://www.codewars.com/users/Fraser%20L>![alt text](https://www.codewars.com/users/Fraser%20L/badges/large)</a>  
 
 ### Includes:
 - Kata Level 5 Scripts
