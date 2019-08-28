@@ -97,7 +97,7 @@ Contains programs worked on at school for Higher and N5, includes different algo
 - Count Occurrences, Finding Max and Min, Linear Search
 
 ## CodeWars Scripts
-Solutions to code for the coding challange website codewars. My codewars account - ![alt text](https://www.codewars.com/users/Fraser%20L/badges/large)
+Solutions to code for the coding challange website codewars. My codewars account - ![alt text](https://www.codewars.com/users/Fraser%20L/badges/large) . 
 https://www.codewars.com/users/Fraser%20L
 
 ### Includes:
