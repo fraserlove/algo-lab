@@ -11,7 +11,7 @@ class User():
         return self.email, self.f_name, self.s_name, self.percentage
 
 users = []
-duplicates = []
+unique = []
 
 def find_min(users):
     min = users[0].percentage
@@ -27,25 +27,22 @@ def find_max(users):
             max = user.percentage
     return max
 
-def create_record_array():
-    with open("data/data.csv", newline='') as file:
+def csv_management():
+    with open('data/input/input_data.csv', 'r') as file:
         for row in csv.reader(file, delimiter=','):
             users.append(User(row))
-
-def write_to_file():
-    with open("data/output_data.csv", "w", newline='') as file:
-        writer = csv.writer(file, delimiter=',')
-        for user in users:
-            if user.email not in duplicates:
-                writer.writerow(user.getDetails())
-                duplicates.append(user.email)
+        with open('data/output/output_data.csv', 'w') as file:
+            writer = csv.writer(file, delimiter=',')
+            for user in users:
+                if user.email not in unique:
+                    writer.writerow(user.getDetails())
+                    unique.append(user.email)
 
 def main():
-    create_record_array()
+    csv_management()
     print("\n{} records in original file".format(len(users)))
-    write_to_file()
-    print("New file created with {} records".format(len(duplicates)))
-    print("{} duplicates removed".format(len(users) - len(duplicates)))
+    print("New file created with {} records".format(len(unique)))
+    print("{} duplicates removed".format(len(users) - len(unique)))
     print("Minimum Prelim Percentage: {:.0f}%".format(float(find_min(users))*100))
     print("Maximum Prelim Percentage: {:.0f}%\n".format(float(find_max(users))*100))
 
