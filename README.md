@@ -1,8 +1,8 @@
 # Python Scripts
-Python Scripts developed by Fraser Love. I am currently developing new simulations of Hamltonian Systems, mainly a Quantum Physics probablility calculator to help visualise Heisenberg's Uncertainty Principle.
+Python Scripts developed by Fraser Love.
 
 ## 3D Engine
-A 3D engine for prjecting 3D wireframes onto a 2D display in python
+A 3D engine for projecting 3D wireframes onto a 2D display in python
 ![alt text](https://github.com/FraserLove/images/blob/master/Screenshot%20from%202019-08-16%2013-29-26.png)
 
 ## Simulations
