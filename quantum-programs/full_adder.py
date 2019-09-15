@@ -61,7 +61,7 @@ def superpos():
     
     result = execute(qc, provider).result()
     counts = result.get_counts(qc)
-    print(counts)
+    print("Superposition Results:", counts)
     if plot_results:
         plot = visualization.plot_histogram(counts)
         plot.savefig('superpos.png')

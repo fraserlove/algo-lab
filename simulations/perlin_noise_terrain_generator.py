@@ -11,12 +11,12 @@ os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = "hide"
 import pygame
 
 # Display Variables
-scale = 25
-dimensions = (1200, 700)
+scale = 40
+dimensions = (1920, 1080)
 x_padding = -20
-y_padding = -250
-rows = 95
-cols = 50
+y_padding = -400
+rows = 75
+cols = 55
 camera_rotation = 1.32
 
 #Perlin Noise Variables
@@ -68,6 +68,9 @@ class Display:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
+                elif event.type == pygame.KEYDOWN:
+                   if event.key == pygame.K_ESCAPE:
+                       pygame.quit()
             pygame.display.update()
 
 class Node():
