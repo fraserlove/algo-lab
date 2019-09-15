@@ -11,12 +11,12 @@ os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = "hide"
 import pygame
 
 # Display Variables
-scale = 40
-dimensions = (1920, 1080)
+scale = 25
+dimensions = (1200, 700)
 x_padding = -20
-y_padding = -400
-rows = 75
-cols = 55
+y_padding = -250
+rows = 95
+cols = 50
 camera_rotation = 1.32
 
 #Perlin Noise Variables
