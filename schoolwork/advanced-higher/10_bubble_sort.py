@@ -9,6 +9,6 @@ def bubbleSort(array):
                 array[inner], array[inner+1] = array[inner+1], array[inner]
                 swaps += 1
         passes += 1
-        print('Pass {}: {}'.format(passes, array))
+        print('Pass {} Swaps {}: {}'.format(passes, swaps, array))
 
 bubbleSort(array)

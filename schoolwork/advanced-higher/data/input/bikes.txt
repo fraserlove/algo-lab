@@ -1,0 +1,6 @@
+Marassa,24,Hybrid,199.99
+Apollo,18,Mountain,250.99
+Verve,18,Hybrid,300.00
+View,18,Street,230.00
+Parva,15,Hybrid,159.20
+Boardman,18,Hybrid,399.20
