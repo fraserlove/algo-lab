@@ -1,7 +1,15 @@
 import random
 
-def initArray(length):
+def genRandArray(length):
     array = random.sample(range(length), length)
+    return array
+
+def genReverseArray(length):
+    array = [i for i in range(length-1,-1,-1)]
+    return array
+
+def genSortedArray(length):
+    array = [i for i in range(0,length)]
     return array
 
 def insertionSort(array):
@@ -15,7 +23,14 @@ def insertionSort(array):
             index -= 1
             swaps += 1
         array[index] = cur
-        print('Passes: {} Swaps: {} {}'.format(passes, swaps, array))
+    print('Passes: {} Swaps: {} {}'.format(passes, swaps, array))
 
-array = initArray(18)
-insertionSort(array)
+sorted_array = genSortedArray(18)
+reverse_array = genReverseArray(18)
+random_array = genRandArray(18)
+print('Best: ',end='')
+insertionSort(sorted_array)
+print('Worst: ',end='')
+insertionSort(reverse_array)
+print('Random: ',end='')
+insertionSort(random_array)
