@@ -16,7 +16,8 @@ def setup():
     email_no = 0
     return session, email_no, email_time, msg, email, password
 
-def send_email(session, email_no, email_time, msg, email, password, entered):
+def send_email(session, email_no, email_time, msg, email, password):
+    global entered
     while session == True:
         time_now = datetime.datetime(1,1,1).now().time()
         if time_now >= email_time:
@@ -51,5 +52,5 @@ def key_listener():
 
 if __name__ == '__main__':
     session, email_no, email_time, msg, email, password = setup()
-    Thread(target = send_email, args = (session, email_no, email_time, msg, email, password, entered)).start()
+    Thread(target = send_email, args = (session, email_no, email_time, msg, email, password)).start()
     Thread(target = key_listener).start()
