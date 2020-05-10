@@ -97,12 +97,10 @@ Contains programs worked on at school for Higher and N5, includes different algo
 - Count Occurrences, Finding Max and Min, Linear Search
 
 ## CodeWars Scripts
-Solutions to code for the coding challange website codewars. My codewars account:
-<a href=https://www.codewars.com/users/Fraser%20L>![alt text](https://www.codewars.com/users/Fraser%20L/badges/large)</a>  
+Solutions to code for the coding challange website codewars.
 
 ### Includes:
 - Kata Level 5 Scripts
 - Kata Level 6 Scripts
 - Kata Level 7 Scripts
 - Kata Level 8 Scripts
-
