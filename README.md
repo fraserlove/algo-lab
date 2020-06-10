@@ -34,6 +34,9 @@ This repository serves as a library for all my simulations and algorithms writte
   - Wire World
   - Langton's Ant
   - Brian's Brain
+  
+## Machine Learning and AI
+  - Neural Network Handwriting Classifier.py
     
 ## Algorithms and Other Programs
   - Decimal to Binary Convertor
