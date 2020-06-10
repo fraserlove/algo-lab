@@ -1,91 +1,56 @@
 # Python Algorithms and Simulations
-Python Scripts developed by Fraser Love.
+This repository serves as a library for all my simulations and algorithms written in Python. Included are programs ranging from a solar system and gravity simulations to a sorting algorithm visualiser. All programs were implemented in Python by Fraser Love - me@fraser.love.
 
-## 3D Engine
-A 3D engine for projecting 3D wireframes onto a 2D display in python
+## Graphics and Games
+  - Basic 3D Wireframe Engine (for complete 3D graphics engine see fl3d-engine repo)
+  - Snake implementation
 
-## Simulations
-Computer models and simulations of Hamltonian and complex systems
-  
-### Includes:
+## Simulations and Generators
+  - 2D Gravity Simulation
+  - Solar System Simulation
+  - Perlin Noise Terrain Generator
+  - Perlin Noise Flow Field (With and Without Trails)
+  - Fractal Tree Generator
 
-- 2D Gravity Simulation
-- Solar System Simulation
-- Perlin Noise Terrain Generator
-- Perlin Noise Flow Field (No Trails)
-- Perlin Noise Flow Field (With Trails)
-- Fractal Tree Generator
-
-## Data Structures and Algorithms
-Code for certain data structures and algorithms I have built
-
-### Includes:
-
-- Sorting algorithms:
-  - Selection
-  - Bubble
-  - Insertion
-  - Shell
-  - Radix
-  - Cocktail
-  - Merge
-  - Bitonic
-  - Quick
-  - Heap
-  - Bucket
-- Sorting Algorithm Time Complexity Graph
-- Sorting Algorithm Visualiser
+## Sorting Algorithms and Visualisers
+  - Sorting Algorithm Time Complexity Graph
+  - Sorting Algorithm Visualiser
+  - Sorting algorithms:
+    - Selection
+    - Bubble
+    - Insertion
+    - Shell
+    - Radix
+    - Cocktail
+    - Merge
+    - Bitonic
+    - Quick
+    - Heap
+    - Bucket
    
 ## Cellular Automata
-Mathematical systems used to represent cellular life
-  
-### Includes:
-
-- Conway's Game of Life
-- Predator and Prey
-- Wire World
-- Langton's Ant
-- Brian's Brain
-
-## Games
-A variety of games made in python
-
-### Includes:
-
-- Snake
+  - Conway's Game of Life
+  - Predator and Prey
+  - Wire World
+  - Langton's Ant
+  - Brian's Brain
     
-## Tools
-General purpose programs designed to carry out a specific task
-  
-### Includes:
+## Algorithms and Other Programs
+  - Decimal to Binary Convertor
+  - Mass Email Generator
+  - Mass File Generator
+  - Flipped Number Search
+  - Remote Keylogger with Feedback
+  - Password Generator
+  - Random Binary File Generator
+  - Random Text File Generator
+  - Prime Number Search
+  - ASCII to Base64 Encoder and Decoder
+  - MD5 Hash Generator
+  - Huffman Coding Compression and Decompression
+  - Polynomial Constructor from Roots
 
-- Decimal to Binary Convertor
-- Mass Email Generator
-- Mass File Generator
-- Flipped Number Search
-- Remote Keylogger with Feedback
-- Password Generator
-- Random Binary File Generator
-- Random Text File Generator
-- Prime Number Search
-- ASCII to Base64 Encoder and Decoder
-- MD5 Hash Generator
-- Huffman Coding Compression and Decompression
-- Polynomial Constructor from Roots
-
-## EES Project
-Project files for a school engineering task to design a more effective way of communication between company and clients
-
-### Includes:
-
-- Automatic Reporting System
-- HTTP Webserver for Storing Information
-
-## Schoolwork
-Contains programs worked on at school for Higher and N5, includes different algorithms and task solutions
-
-### Includes:
-
-- Record Structure Array Manipulation
-- Parallel Array Programs
-- Count Occurrences, Finding Max and Min, Linear Search
+## N5, Higher and Advanced Higher Algorithms
+  - Record Structure Array Manipulation
+  - Parallel Array Programs
+  - Count Occurrences, Finding Max and Min, Linear Search
