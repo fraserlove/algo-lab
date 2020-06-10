@@ -36,7 +36,7 @@ This repository serves as a library for all my simulations and algorithms writte
   - Brian's Brain
   
 ## Machine Learning and AI
-  - Neural Network Handwriting Classifier.py
+  - Neural Network Handwriting Classifier
     
 ## Algorithms and Other Programs
   - Decimal to Binary Convertor
