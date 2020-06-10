@@ -1,9 +1,8 @@
-# Python Scripts
+# Python Algorithms and Simulations
 Python Scripts developed by Fraser Love.
 
 ## 3D Engine
 A 3D engine for projecting 3D wireframes onto a 2D display in python
-![alt text](https://github.com/FraserLove/images/blob/master/Screenshot%20from%202019-08-16%2013-29-26.png)
 
 ## Simulations
 Computer models and simulations of Hamltonian and complex systems
@@ -13,13 +12,9 @@ Computer models and simulations of Hamltonian and complex systems
 - 2D Gravity Simulation
 - Solar System Simulation
 - Perlin Noise Terrain Generator
-![alt text](https://github.com/FraserLove/images/blob/master/Screenshot%20from%202019-08-12%2023-38-50.png)
 - Perlin Noise Flow Field (No Trails)
-![alt text](https://github.com/FraserLove/images/blob/master/Screenshot%20from%202019-08-13%2021-02-45.png)
 - Perlin Noise Flow Field (With Trails)
-![alt_text](https://github.com/FraserLove/images/blob/master/Screenshot%20from%202019-08-13%2022-23-37.png)
 - Fractal Tree Generator
-![alt_text](https://github.com/FraserLove/images/blob/master/Screenshot%20from%202019-08-14%2022-31-22.png)
 
 ## Data Structures and Algorithms
 Code for certain data structures and algorithms I have built
@@ -39,9 +34,7 @@ Code for certain data structures and algorithms I have built
   - Heap
   - Bucket
 - Sorting Algorithm Time Complexity Graph
-![alt text](https://github.com/FraserLove/images/blob/master/Screenshot%20from%202019-08-06%2016-41-44.png)
 - Sorting Algorithm Visualiser
-![alt text](https://github.com/FraserLove/images/blob/master/Screenshot%20from%202019-08-06%2017-29-25.png)
    
 ## Cellular Automata
 Mathematical systems used to represent cellular life
@@ -78,6 +71,7 @@ General purpose programs designed to carry out a specific task
 - ASCII to Base64 Encoder and Decoder
 - MD5 Hash Generator
 - Huffman Coding Compression and Decompression
+- Polynomial Constructor from Roots
 
 ## EES Project
 Project files for a school engineering task to design a more effective way of communication between company and clients
@@ -95,12 +89,3 @@ Contains programs worked on at school for Higher and N5, includes different algo
 - Record Structure Array Manipulation
 - Parallel Array Programs
 - Count Occurrences, Finding Max and Min, Linear Search
-
-## CodeWars Scripts
-Solutions to code for the coding challange website codewars.
-
-### Includes:
-- Kata Level 5 Scripts
-- Kata Level 6 Scripts
-- Kata Level 7 Scripts
-- Kata Level 8 Scripts
