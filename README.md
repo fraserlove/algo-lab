@@ -1,5 +1,6 @@
 # Python Algorithms and Simulations
-This repository serves as a library for all my simulations and algorithms written in Python. Included are programs ranging from a solar system and gravity simulations to a sorting algorithm visualiser. All programs were implemented in Python by Fraser Love - me@fraser.love.
+This repository serves as a library for all my simulations and algorithms written in Python. Included are programs ranging from a solar system and gravity simulations to a sorting algorithm visualiser. 
+All programs were implemented in Python by Fraser Love - me@fraser.love. For more detail into the different programs featured here go to: [fraser.love](https://fraser.love).
 
 ## Graphics and Games
   - Basic 3D Wireframe Engine (for complete 3D graphics engine see [fl3d-engine](https://github.com/fraserlove/fl3d-engine) repo)
