@@ -38,7 +38,11 @@ All programs were implemented in Python by Fraser Love - me@fraser.love. For mor
   
 ## Machine Learning and AI
   - Neural Network Handwriting Classifier
-    
+  
+ ## Quantum Algorithms
+  - Quantum Full Adder
+  - Quantum Half Adder
+  
 ## Algorithms and Other Programs
   - Decimal to Binary Convertor
   - Mass Email Generator
