@@ -43,22 +43,9 @@ All programs were implemented in Python by Fraser Love - me@fraser.love. For mor
   - Quantum Full Adder
   - Quantum Half Adder
   
-## Algorithms and Other Programs
-  - Decimal to Binary Convertor
-  - Mass Email Generator
-  - Mass File Generator
-  - Flipped Number Search
-  - Remote Keylogger with Feedback
-  - Password Generator
-  - Random Binary File Generator
-  - Random Text File Generator
-  - Prime Number Search
+## General Algorithms
+  - Unefficient Primes Search
   - ASCII to Base64 Encoder and Decoder
   - MD5 Hash Generator
   - Huffman Coding Compression and Decompression
   - Polynomial Constructor from Roots
-
-## N5, Higher and Advanced Higher Algorithms
-  - Record Structure Array Manipulation
-  - Parallel Array Programs
-  - Count Occurrences, Finding Max and Min, Linear Search
