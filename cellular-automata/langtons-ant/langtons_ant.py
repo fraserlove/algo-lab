@@ -12,7 +12,7 @@ Improvements
 import pygame, sys, time
 from pygame.locals import *
 
-grid_size = (920, 480)              # Sets the size of the grid
+grid_size = (1120, 580)              # Sets the size of the grid
 cell_size = 2                       # Sets the drawn size of each cell
 frame_rate = 60
 calc_per_frame = 1000               # Sets the calculations done between each frame - higher is faster
@@ -81,8 +81,7 @@ def game_loop(display, clock, cells, ant):
         update(display, generation, start_time)
         clock.tick(frame_rate)
 
-def main():
+
+if __name__ == '__main__':
     display, clock, cells, ant = initialise()
     game_loop(display, clock, cells, ant)
-
-main()

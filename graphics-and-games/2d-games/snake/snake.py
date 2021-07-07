@@ -94,5 +94,6 @@ def game_loop(display, cells, snake_vec, clock, snake_pos, snake_size, tail):
         draw_cells(display, cells, tail)
         clock.tick(frame_rate)
 
-display, cells, snake_vec, clock , snake_pos = initialise()
-game_loop(display, cells, snake_vec, clock, snake_pos, snake_size, tail)
+if __name__ == "__main__":
+    display, cells, snake_vec, clock , snake_pos = initialise()
+    game_loop(display, cells, snake_vec, clock, snake_pos, snake_size, tail)

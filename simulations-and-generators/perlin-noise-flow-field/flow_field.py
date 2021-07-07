@@ -2,43 +2,45 @@
 Perlin Noise Flow Field
 
 Created 13/08/19
+Updated 07/07/21
 Developed by Fraser Love
 
 A particle flow field using perlin noise to create a vector array to update particle
-position, velocity and acceleration.
+position, velocity and acceleration. The program is not meant to be ran in real-time. An image of each
+frame is saved under images/ and can be combined to produce a video separately.
 """
-import noise, os, random, math, particle
+import noise, os, math, particle, sys, time
 os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = "hide"
 import pygame
 
 # Display Variables
-dimensions = (1000, 600)
-scale = 20
+dimensions = (1920, 1080)
+scale = 10  # Resolution, the lower the value the greater the number of vectors in the simulation
 cols = dimensions[0] // scale
 rows = dimensions[1] // scale
-frame_rate = 60
+particle_count = 100000  # Number of particles in the flow field
+particle_radius = 1  # Radius of particles to display
+show_vectors = False  # If 'true' draws the vectors in the flow field
+show_particles = True  # If 'true' draws the particles in the flow field
 
 # Perlin Noise Variables
-noise_res = 0.08 # Controls the resolution of the perlin noise
-octaves = 1 # Controls the roughness of the perlin noise
-height = 1 # Coefficient of the height of perlin noise
-z_increment = 0.01 # Controls how quick the perlin noise changes
-particle_count = 10000
+noise_res = 0.01  # Controls the resolution of the perlin noise
+octaves = 1  # Controls the roughness of the perlin noise
+height = 1  # Coefficient of the height of perlin noise
+z_increment = 0.01  # Controls how quick the perlin noise changes
 
 class Display:
     """ Object to control the display with pygame """
     def __init__(self):
         self.display = pygame.display.set_mode(dimensions)
-        self.clock = pygame.time.Clock()
         self.particles = []
         self.z_off = 0
+        self.start_time = time.time()
         self.setup()
 
     def setup(self):
         """ Setting up display and adding particles to particles array """
         pygame.display.set_caption("Perlin Noise Flow Field")
-        self.display.fill(pygame.Color(255,255,255))
-        pygame.display.update()
         self.add_particles(particle_count)
         self.run()
 
@@ -53,10 +55,11 @@ class Display:
         for y in range(rows):
             x_off = 0
             for x in range(cols):
-                perlin = noise.pnoise3(x_off,y_off,self.z_off,octaves)* math.pi * 2 * height
+                perlin = noise.pnoise3(x_off,y_off,self.z_off,octaves) * math.pi * 2 * height
                 vector = particle.Vector(perlin)
                 self.flowfield.append(vector)
-                pygame.draw.aaline(self.display, (140,140,140), (x*scale, y*scale), ((x+vector.display_x)*scale, (y+vector.display_y)*scale), 1)
+                if show_vectors:
+                    pygame.draw.aaline(self.display, (140,140,140), (x*scale, y*scale), ((x+vector.display_x)*scale, (y+vector.display_y)*scale), 1)
                 x_off += noise_res
             y_off += noise_res
         self.z_off += z_increment
@@ -66,20 +69,24 @@ class Display:
         for particle in self.particles:
             particle.update()
             particle.follow(self.flowfield)
-            pygame.draw.rect(self.display, (0,0,0), (int(particle.pos.x), int(particle.pos.y), 2, 2))
+            if show_particles:
+                pygame.draw.rect(self.display, "white", (int(particle.pos.x), int(particle.pos.y), particle_radius, particle_radius))
 
     def run(self):
         """ Main program loop controling updating display, flowfield and particles """
-        running = True
-        while running:
-            self.display.fill(pygame.Color(255,255,255))
+        os.makedirs("images/", exist_ok=True)
+        step = 1
+        while True:
+            pygame.display.set_caption('Perlin Noise Flow Field     Step: {}     Time: {}'.format(str(step), round(time.time() - self.start_time, 2)))
+            self.display.fill("black")
             self.perlin_noise()
             self.draw_particles()
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    running = False
+                    pygame.quit(); sys.exit();
             pygame.display.update()
-            self.clock.tick(frame_rate)
+            pygame.image.save(self.display, "images/{}.jpg".format(step))
+            step += 1
 
 if __name__ == "__main__":
     pygame.init()

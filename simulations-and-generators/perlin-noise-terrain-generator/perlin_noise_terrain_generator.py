@@ -6,25 +6,25 @@ Developed by Fraser Love
 
 An dynamic terrain generator using perlin noise.
 """
-import math, random, noise, os
+import math, noise, os
 os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = "hide"
 import pygame
 
 # Display Variables
 scale = 25
-dimensions = (1200, 700)
-x_padding = -20
-y_padding = -250
-rows = 95
-cols = 50
-camera_rotation = 1.32
+dimensions = (1920, 1080)
+x_padding = 0
+y_padding = -500
+rows = 70
+cols = 100
+camera_rotation = 1.2
 
-#Perlin Noise Variables
+# Perlin Noise Variables
 flying = 0
-flying_rate = 0.1 # Controls the speed of terrain generation
-noise_res = 0.08 # Controls the resolution of the perlin noise
-octaves = 2 # Controls the roughness of the perlin noise
-height = 8 # Coefficient of the height of perlin noise
+flying_rate = 0.001  # Controls the speed of terrain generation
+noise_res = 0.08  # Controls the resolution of the perlin noise
+octaves = 2  # Controls the roughness of the perlin noise
+height = 8  # Coefficient of the height of perlin noise
 
 class Display:
     """ Object to generate a pygame window and terrain and update display"""
@@ -49,7 +49,7 @@ class Display:
         for y in range(rows):
             x_off = 0
             for x in range(cols):
-                z = noise.pnoise2(x_off,y_off,octaves)*height
+                z = noise.pnoise2(x_off,y_off,octaves)*height - 2
                 new_nodes.append(Node((x,y,z)))
                 x_off += noise_res
             y_off += noise_res
@@ -60,7 +60,7 @@ class Display:
         running = True
         while running:
             pygame.display.set_caption("Perlin Noise Terrain Generation")
-            self.display.fill((20,20,20))
+            self.display.fill((0,0,0))
             self.gen_terrain()
             self.terrain.rotate_x(camera_rotation)
             self.terrain.gen_lines()
@@ -114,5 +114,6 @@ class Terrain():
         for i, line in enumerate(self.lines):
             print("Line:", i, line[0], line[1])
 
-pygame.init()
-window = Display()
+if __name__ == '__main__':
+    pygame.init()
+    window = Display()

@@ -81,4 +81,5 @@ def main():
     display, clock, cells = initialise()
     game_loop(display, clock, cells)
 
-main()
+if __name__ == "__main__":
+    main()

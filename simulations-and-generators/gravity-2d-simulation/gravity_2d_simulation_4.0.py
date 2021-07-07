@@ -20,7 +20,9 @@ Every frame:
 - Draw new objects on screen
 """
 
-import random, pygame, sys, math, time, os
+import random, sys, math, time, os
+os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = "hide"
+import pygame
 
 initial_objects = 2000   # Number of initial objects in the simulation
 object_list = []  # List to hold all of the MassObjects in the simulation
@@ -38,7 +40,7 @@ start_time = time.time()
 pygame.init()
 display = pygame.display.set_mode(dimensions)
 display.fill(pygame.Color("black"))
-clock = pygame.time.Clock()
+
 
 class MassObject:
     def __init__(self, mass, x_pos, y_pos, x_vel, y_vel):
@@ -49,9 +51,11 @@ class MassObject:
         self.x_velocity = x_vel
         self.y_velocity = y_vel
 
+
 def setup(object_list):
     for i in range(initial_objects):
         object_list.append(MassObject(random.randrange(min_initial_mass, max_initial_mass), random.randrange(1, dimensions[0]), random.randrange(1, dimensions[1]), random.randrange(-max_initial_velocity, max_initial_velocity) / 100000, random.randrange(-max_initial_velocity, max_initial_velocity) / 100000))
+
 
 def add_force(object):
     x_acc = y_acc = 0.0
@@ -64,6 +68,7 @@ def add_force(object):
             y_acc += fg * math.sin(angle) / object.mass
     return x_acc, y_acc
 
+
 def update_pos(object_list):
     for object in object_list:
         x_acc, y_acc = add_force(object)
@@ -71,6 +76,7 @@ def update_pos(object_list):
         object.x_pos += object.x_velocity * time_step
         object.y_velocity += y_acc * time_step
         object.y_pos += object.y_velocity * time_step
+
 
 def check_collisions(object_list):
     max_mass = 0
@@ -89,12 +95,14 @@ def check_collisions(object_list):
             max_mass = object.mass
     return max_mass
 
+
 def draw(object_list, max_mass):
     display.fill(pygame.Color("black"))
     for object in object_list:
         brightness = int((math.log(object.mass) / math.log(max_mass)) * 255)
         pygame.draw.circle(display, (brightness, brightness, brightness), (int(object.x_pos), int(object.y_pos)), int(object.radius), 0)
     pygame.display.update()
+
 
 def main():
     setup(object_list)
@@ -110,5 +118,6 @@ def main():
         update_pos(object_list)
         pygame.image.save(display, "images/{}.jpg".format(step))
         step += 1
+
 
 main()

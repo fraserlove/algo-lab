@@ -10,7 +10,7 @@ All algorithms and simulations were implemented in Python by Fraser Love - me@fr
   - 2D Gravity Simulation
   - Solar System Simulation
   - Perlin Noise Terrain Generator
-  - Perlin Noise Flow Field (With and Without Trails)
+  - Perlin Noise Flow Field
   - Fractal Tree Generator
 
 ## Sorting Algorithms and Visualisers
