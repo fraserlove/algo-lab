@@ -9,7 +9,7 @@ Ran on CPU - Recommended to use on High-Range CPU
 Simulating the force of gravity on celestial bodies and galaxy formation using Newtons laws and conservation of momentum.
 
 This version of the program is designed to be as accurate as possible and therefore is not meant to be ran in real-time.
-Instead the program save an image of the simulation after each step, these images can then be combined to create a video
+Instead the program saves an image of the simulation after each step, these images can then be combined to create a video
 file to show the whole simulation at the desired frame-rate.
 
 Every frame:
@@ -19,21 +19,19 @@ Every frame:
 - Check if particles have collided and if so use conservation of momentum to update new particles mass and velocity
 - Draw new objects on screen
 """
-import random, pygame, sys, math, time
-from math import sqrt
-from pygame.locals import *
 
-initial_objects = 1000   # Number of initial objects in the simulation
-object_list = []
-object_radius = 2
-G = 6.67408e-11         # Gravitational constant
-time_step = 5000       # How much time has passed between every calculation - (lower more accurate: recommend < 10000)
-max_v = 100             # A maximum velocity for objects to minimise inaccurate integrals of velocity
-dimensions = (1920, 1080)
-mass_to_radius_factor = 10
-max_initial_velocity = 10
-max_initial_mass = 40
-min_initial_mass = 10
+import random, pygame, sys, math, time, os
+
+initial_objects = 2000   # Number of initial objects in the simulation
+object_list = []  # List to hold all of the MassObjects in the simulation
+G = 6.67408e-11  # Gravitational constant
+time_step = 5000  # How much time has passed between every calculation - (lower more accurate: recommend < 10000)
+max_v = 100  # A maximum velocity for objects to minimise inaccurate integrals of velocity
+dimensions = (1920, 1080)  # Dimensions of the simulation
+mass_to_radius_factor = 10  # Amount to which the radius should be scaled down by according to its weight
+max_initial_velocity = 10  # Maximum initial velocity of objects
+max_initial_mass = 40  # Maximum starting mass of objects
+min_initial_mass = 10  # Minimum starting mass of objects
 
 start_time = time.time()
 
@@ -101,15 +99,16 @@ def draw(object_list, max_mass):
 def main():
     setup(object_list)
     step = 1
+    os.makedirs("images/", exist_ok=True)
     while True:
-        pygame.display.set_caption('Gravity Simulation: Step {}    RealTime: {}     Objects: {}'.format(str(step), round(time.time() - start_time, 2), len(object_list)))
+        pygame.display.set_caption('Gravity Simulation     Step: {}     Time: {}    Objects: {}'.format(str(step), round(time.time() - start_time, 2), len(object_list)))
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit(); sys.exit();
         max_mass = check_collisions(object_list)
         draw(object_list, max_mass)
         update_pos(object_list)
-        step += 1
         pygame.image.save(display, "images/{}.jpg".format(step))
+        step += 1
 
 main()
