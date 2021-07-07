@@ -13,7 +13,7 @@ dimensions = (1920, 1080)
 spacing = 0                         # Sets space between each cell
 cell_size = 4                       # Sets the drawn size of each cell
 frame_rate = 30
-prey_probability = 0.1             # Probability of Prey reproducing - change for different results (choose 0.5 for spiral)
+prey_probability = 0.3             # Probability of Prey reproducing - change for different results (choose 0.5 for spiral)
 predator_probability = 0.2          # Probability of Predator reproducing - change for differnent results (chose 0.4 for spiral)
 start_time = time.time()
 
@@ -61,10 +61,10 @@ def draw():
     for i in range(cells_x):
         for j in range(cells_y):
             if new[i][j] == 1:
-                pygame.draw.rect(display, (133, 255, 135),
+                pygame.draw.rect(display, (255, 255, 255),
                                  (i * (cell_size + spacing), j * (cell_size + spacing), cell_size, cell_size), 0)
             if new[i][j] == 2:
-                pygame.draw.rect(display, (217, 35, 35),
+                pygame.draw.rect(display, (70, 70, 70),
                                  (i * (cell_size + spacing), j * (cell_size + spacing), cell_size, cell_size), 0)
             cells[i][j] = new[i][j]
     pygame.display.update()
