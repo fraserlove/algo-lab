@@ -1,0 +1,17 @@
+# Computer Graphics
+pygame
+
+# Mathematical Computing
+statsmodels
+numpy
+pandas
+matplotlib
+
+# Graph Algorithms
+networkx
+
+# Quantum Algorithms
+qiskit
+
+# Perlin Noise
+noise

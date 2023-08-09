@@ -16,7 +16,7 @@ Some suggested settings (Leave all else as default)
 cutoff = True, max_values[0] = 10000, step = 10
 cutoff = False, max_values[0] = 1000, step = 1
 """
-import sorting_algorithms, time ,csv, os, sys, math
+import sorting_algorithms ,csv, os, sys, math
 os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = "hide"
 import pygame
 

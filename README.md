@@ -1,7 +1,33 @@
-# Algorithms, Simulations and Generators
+# Algorithms, Simulations and Generators Python Lab
 A collection of algorithms, simulations, generators, utilites and mathematical scripts written in Python. Included are scripts ranging from N-body and flow field simulations to scripts for performing polynomial interpoloation and Monte Carlo simulations.
 
 ![alt text](https://fraser.love/content/images/size/w2000/2023/07/Screenshot-2021-07-07-at-13.34.44-2.png)
+
+## Installation and Setup
+Setup your environment and install the required dependencies as follows:
+
+1. **Clone the Repository:**
+```bash
+git clone https://github.com/fraserlove/algorithm-lab.git
+cd algorithm-lab
+```
+
+2. **Create a Python Environment:**
+```bash
+python -m venv .venv
+source .venv/bin/activate
+```
+
+3. **Install Dependencies via PIP:**
+
+```bash
+pip install -r requirements.txt
+```
+4. **Run Any Script:**
+```bash
+cd cellular-automata
+python conway_game_of_life.py
+```
 
 ## Included Scripts
   - Cellular Automata
