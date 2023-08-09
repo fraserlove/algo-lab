@@ -26,7 +26,7 @@ pip install -r requirements.txt
 4. **Run Any Script:**
 ```bash
 cd cellular-automata
-python conway_game_of_life.py
+python conways_game_of_life.py
 ```
 
 ## Included Scripts
