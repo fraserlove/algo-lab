@@ -1,5 +1,5 @@
 # Algorithms, Simulations and Generators Python Lab
-A collection of algorithms, simulations, generators, utilites and mathematical scripts written in Python. Included are scripts ranging from N-body and flow field simulations to scripts for performing polynomial interpoloation and Monte Carlo simulations.
+A collection of algorithms, simulations, generators, utilites and mathematical scripts written in Python. Included are scripts ranging from N-body and flow field simulations to polynomial interpolation and Monte Carlo simulations.
 
 ![alt text](https://fraser.love/content/images/size/w2000/2023/07/Screenshot-2021-07-07-at-13.34.44-2.png)
 
