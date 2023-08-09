@@ -36,9 +36,6 @@ All algorithms and simulations were implemented in Python by Fraser Love - me@fr
   - Langton's Ant
   - Brian's Brain
   
-## Machine Learning and AI
-  - Neural Network Handwriting Classifier
-  
  ## Quantum Algorithms
   - Quantum Full Adder
   - Quantum Half Adder
