@@ -8,8 +8,8 @@ Setup your environment and install the required dependencies as follows:
 
 1. **Clone the Repository:**
 ```bash
-git clone https://github.com/fraserlove/algorithm-lab.git
-cd algorithm-lab
+git clone https://github.com/fraserlove/algo-lab.git
+cd algo-lab
 ```
 
 2. **Create a Python Environment:**
@@ -39,10 +39,15 @@ python conways_game_of_life.py
   - Computer Graphics
     - 3D Wireframe Engine (for a complete 3D graphics engine see [fl3d-engine](https://github.com/fraserlove/fl3d-engine) 
     - Snake
-  - Data Utilities
+  - Encoding and Cryptography
     - Base64 Encoder and Decoder
     - Huffman Coding
     - MD5 Hashing
+  - File Utilities
+    - Image Resizer
+    - Image Series to Video Convertor
+    - PDF to Image Convertor
+    - Python Import Wrapper
   - Graph Algorithms
     - DAG Topological Sorting (Lexicographical and Non-Lexicographical)
     - Eulerian Circuit and Hamiltionian Cycle Generators
