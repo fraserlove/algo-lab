@@ -12,7 +12,7 @@ git clone https://github.com/fraserlove/algo-lab.git
 cd algo-lab
 ```
 
-2. **Create a Python Environment:**
+2. **Create a Python Virtual Environment:**
 ```bash
 python -m venv .venv
 source .venv/bin/activate
@@ -37,7 +37,7 @@ python conways_game_of_life.py
     - Langton's Ant
     - Brian's Brain
   - Computer Graphics
-    - 3D Wireframe Engine (for a complete 3D graphics engine see [fl3d-engine](https://github.com/fraserlove/fl3d-engine) 
+    - 3D Wireframe Engine 
     - Snake
   - Encoding and Cryptography
     - Base64 Encoder and Decoder
