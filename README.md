@@ -3,7 +3,7 @@ A collection of algorithms, simulations, generators, utilities and mathematical 
 
 ![alt text](https://fraser.love/content/images/size/w2000/2023/07/Screenshot-2021-07-07-at-13.34.44-2.png)
 
-## Installation and Setup
+## Installation and Usage
 Setup your environment and install the required dependencies as follows:
 
 1. **Clone the Repository:**
