@@ -43,7 +43,7 @@ class GUI():
         self.window.geometry("{}x{}+{}+{}".format(self.width, self.height, int((self.x_off - self.width) / 2), int((self.y_off - self.height) / 2)))
         self.window.overrideredirect(True)
         self.window.title('FL3D Engine')
-        self.window.iconbitmap(r'{}/images/ICON.ico'.format(self.parent_dir))
+        self.window.iconbitmap(r'{}/images/icon.ico'.format(self.parent_dir))
 
         self.controls_header_padding = 10
         self.controls_separator_padding = 50
