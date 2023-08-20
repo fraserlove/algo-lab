@@ -16,8 +16,12 @@ qiskit
 # Perlin Noise
 noise
 
+# GPT
+openai
+
 # Other Utils
 opencv-python
 pdf2image
 pillow
 requests
+keyring
