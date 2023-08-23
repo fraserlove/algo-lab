@@ -9,6 +9,7 @@ matplotlib
 
 # Graph Algorithms
 networkx
+graphviz
 
 # Quantum Algorithms
 qiskit
