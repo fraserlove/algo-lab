@@ -1,6 +1,5 @@
 import graphviz
-
-from value import Value
+from network.value import Value
 
 '''
 Important: The graphviz package must be installed on the users system before use. 
@@ -27,13 +26,14 @@ def trace(root: Value) -> tuple[set, set]:
 
 def draw_graph(root: Value) -> graphviz.Digraph:
     ''' Draws a graph comprised of Value objects with corresponding gradients. '''
-    
+
     graph = graphviz.Digraph(format='svg', graph_attr={'rankdir' : 'LR'}) # Draw left to right.
     vertices, edges = trace(root)
 
     for v in vertices:
         uid = str(id(v))
         # For any value in the graph, create a rectangular node for it.
+        print('label:', v.label, 'data:', v.data, 'grad:', v.grad)
         graph.node(name=uid, label=f'{{ {v.label} | data {v.data:.2f} | grad {v.grad:.2f} }}', shape='record')
         if v._op:
             # If this value is a result of some operation, create a circular node for it.
