@@ -86,7 +86,6 @@ class Value:
             node._backward()
 
     def __neg__(self) -> Self:
-        # -self
         return self * -1
     
     def __sub__(self, other: Any) -> Self:
