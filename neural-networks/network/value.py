@@ -51,6 +51,14 @@ class Value:
         out._backward = _backward
         return out
     
+    def log(self) -> Self:
+        out = Value(math.log(self.data), (self, ), 'ln')
+
+        def _backward():
+            self.grad += (1 / self.data) * out.grad
+        out._backward = _backward
+        return out
+    
     def relu(self) -> Self:
         out = Value(0 if self.data < 0 else self.data, (self, ), 'relu')
 
