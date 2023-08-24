@@ -1,14 +1,6 @@
 import graphviz
 from network.value import Value
 
-'''
-Important: The graphviz package must be installed on the users system before use. 
-
-    brew install graphviz
-    sudo apt install graphviz
-
-'''
-
 def trace(root: Value) -> tuple[set, set]:
     ''' Builds a set of vertices and edges in a connected graph of Value objects. '''
 
