@@ -17,11 +17,12 @@ qiskit
 # Perlin Noise
 noise
 
-# GPT
+# Deep Learning
 openai
+torch
+opencv-python
 
 # Other Utils
-opencv-python
 pdf2image
 pillow
 requests
