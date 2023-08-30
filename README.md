@@ -40,7 +40,7 @@ python conways_game_of_life.py
     - 3D Wireframe Engine 
     - FL3D - A 3D Rendering Engine
     - Snake
-  -  Deep Learning
+  - Deep Learning
     - Language Models
        - Bigram Language Model (Bigram Count Approach and Gradient Based Approach)
        - MLP Language Model
