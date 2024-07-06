@@ -88,12 +88,11 @@ python conways_game_of_life.py
       - Bucket
 
 ## Screenshots
-![alt text](https://fraser.love/content/images/2023/07/Screenshot-2021-07-05-at-21.53.25.png)
-![alt text](https://fraser.love/content/images/2023/07/1325.jpg)
-![alt text](https://fraser.love/content/images/2023/07/Screenshot-2021-07-05-at-14.01.01.png)
-![alt text](https://fraser.love/content/images/2023/07/Screenshot-2021-07-07-at-13.34.44.png)
-![alt text](https://fraser.love/content/images/2023/07/Screenshot-2021-07-07-at-16.52.06.png)
-![alt text](https://fraser.love/content/images/2023/07/Screenshot-2021-07-07-at-23.15.47.png)
-![alt text](https://fraser.love/content/images/2023/07/Screenshot-2021-07-07-at-12.20.33.png)
-![alt text](https://fraser.love/content/images/2023/07/Screenshot-2021-07-07-at-16.57.03.png)
-![alt text](https://fraser.love/content/images/2023/07/Screenshot-2021-07-05-at-182105.png)
+![alt text](assets/ant_world.png)
+![alt text](assets/brians_brain.png)
+![alt text](assets/flow_field.png)
+![alt text](assets/fractal_trees.png)
+![alt text](assets/game_of_life.png)
+![alt text](assets/gravity_simulator.jpg)
+![alt text](assets/sorting_algorithms.png)
+![alt text](assets/terrain_generator.png)
