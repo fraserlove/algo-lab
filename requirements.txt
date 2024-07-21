@@ -22,8 +22,17 @@ openai
 torch
 opencv-python
 
-# Other Utils
+# Trading Platform
+alpaca-py
+
+# Importing API keys
+keyring
+
+# Parsing data from web
+requests
+lxml
+beautifulsoup4
+
+# Image Processing
 pdf2image
 pillow
-requests
-keyring
