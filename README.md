@@ -30,6 +30,8 @@ python conways_game_of_life.py
 ```
 
 ## Included Scripts
+  - Algorithmic Trading
+    - Senate Long
   - Cellular Automata
     - Conway's Game of Life
     - Predator and Prey
