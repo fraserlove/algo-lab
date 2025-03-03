@@ -7,24 +7,24 @@ A collection of algorithms, simulations, generators, utilities and mathematical 
 Setup your environment and install the required dependencies as follows:
 
 1. **Clone the Repository:**
-```bash
+```sh
 git clone https://github.com/fraserlove/algo-lab.git
 cd algo-lab
 ```
 
 2. **Create a Python Virtual Environment:**
-```bash
+```sh
 python -m venv .venv
 source .venv/bin/activate
 ```
 
 3. **Install Dependencies via PIP:**
 
-```bash
+```sh
 pip install -r requirements.txt
 ```
 4. **Run Any Script:**
-```bash
+```sh
 cd cellular-automata
 python conways_game_of_life.py
 ```
