@@ -1,0 +1,17 @@
+[build-system]
+requires = ['hatchling']
+build-backend = 'hatchling.build'
+
+[project]
+name = 'autodiff'
+dynamic = ['version']
+readme = 'README.md'
+authors = [{name = 'Fraser Love', email = 'me@fraser.love'}]
+dependencies = [
+    'numpy~=2.2.0',
+    'graphviz~=0.20.0',
+]
+requires-python = '>=3.10'
+
+[tool.hatch.version]
+path = 'autodiff/__init__.py'

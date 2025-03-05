@@ -1,0 +1,17 @@
+[build-system]
+requires = ['hatchling']
+build-backend = 'hatchling.build'
+
+[project]
+name = 'gpt'
+dynamic = ['version']
+readme = 'README.md'
+authors = [{name = 'Fraser Love', email = 'me@fraser.love'}]
+dependencies = [
+    'regex~=2024.11.6',
+    'torch~=2.6.0',
+]
+requires-python = '>=3.10'
+
+[tool.hatch.version]
+path = 'gpt/__init__.py'
