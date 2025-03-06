@@ -1,93 +1,98 @@
-"""
+'''
 Perlin Noise Flow Field
 
-Created 13/08/19
-Updated 07/07/21
-Developed by Fraser Love
+A particle flow field simulation using perlin noise to create vector arrays that
+control particle movement. Each frame is saved as an image that can be combined
+into a video separately.
+'''
+import os
+import math
+import time
+import noise
+import random
 
-A particle flow field using perlin noise to create a vector array to update particle
-position, velocity and acceleration. The program is not meant to be ran in real-time. An image of each
-frame is saved under images/ and can be combined to produce a video separately.
-"""
-import noise, os, math, particle, sys, time
-os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = "hide"
+from particle import Particle, Vector
+
+os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = '1'
 import pygame
 
-# Display Variables
-dimensions = (1920, 1080)
-scale = 10  # Resolution, the lower the value the greater the number of vectors in the simulation
-cols = dimensions[0] // scale
-rows = dimensions[1] // scale
-particle_count = 100000  # Number of particles in the flow field
-particle_radius = 1  # Radius of particles to display
-show_vectors = False  # If 'true' draws the vectors in the flow field
-show_particles = True  # If 'true' draws the particles in the flow field
+# Configuration
+DIMENSIONS = (1920, 1080)
+SCALE = 20  # Resolution - lower value means more vectors
+COLS = DIMENSIONS[0] // SCALE
+ROWS = DIMENSIONS[1] // SCALE
+PARTICLE_COUNT = 20000
+PARTICLE_RADIUS = 1
+SHOW_VECTORS = True
+SHOW_PARTICLES = True
 
-# Perlin Noise Variables
-noise_res = 0.01  # Controls the resolution of the perlin noise
-octaves = 1  # Controls the roughness of the perlin noise
-height = 1  # Coefficient of the height of perlin noise
-z_increment = 0.01  # Controls how quick the perlin noise changes
+# Perlin Noise Settings
+NOISE_RES = 0.01
+OCTAVES = 4
+HEIGHT = 1
+Z_INCREMENT = 2e-2
 
 class Display:
-    """ Object to control the display with pygame """
+    '''Controls the display and simulation logic'''
     def __init__(self):
-        self.display = pygame.display.set_mode(dimensions)
-        self.particles = []
+        self.display = pygame.display.set_mode(DIMENSIONS)
+        pygame.display.set_caption('Flow Field')
+        self.particles = [Particle(Vector(x=random.randint(0, DIMENSIONS[0]), y=random.randint(0, DIMENSIONS[1]))) for _ in range(PARTICLE_COUNT)]
         self.z_off = 0
         self.start_time = time.time()
-        self.setup()
-
-    def setup(self):
-        """ Setting up display and adding particles to particles array """
-        pygame.display.set_caption("Perlin Noise Flow Field")
-        self.add_particles(particle_count)
-        self.run()
-
-    def add_particles(self, amount):
-        for i in range(amount):
-            self.particles.append(particle.Particle())
-
+        
     def perlin_noise(self):
-        """ Creating 3D perlin noise and storing it as a vector in an array called flowfield """
-        y_off = 0
+        '''Generate 3D perlin noise and store as vectors in flowfield'''
         self.flowfield = []
-        for y in range(rows):
+        y_off = 0
+        
+        for y in range(ROWS):
             x_off = 0
-            for x in range(cols):
-                perlin = noise.pnoise3(x_off,y_off,self.z_off,octaves) * math.pi * 2 * height
-                vector = particle.Vector(perlin)
+            for x in range(COLS):
+                # Normalize perlin noise to range [-1, 1] and map directly to angle [-π, π]
+                perlin = noise.pnoise3(x_off, y_off, self.z_off, OCTAVES) * 4
+                angle = math.pi * perlin  # Maps [-1,1] to [-2π,2π]
+                vector = Vector(angle=angle)
                 self.flowfield.append(vector)
-                if show_vectors:
-                    pygame.draw.aaline(self.display, (140,140,140), (x*scale, y*scale), ((x+vector.display_x)*scale, (y+vector.display_y)*scale), 1)
-                x_off += noise_res
-            y_off += noise_res
-        self.z_off += z_increment
+                
+                if SHOW_VECTORS:
+                    dx = x * SCALE + vector.unit().x * SCALE
+                    dy = y * SCALE + vector.unit().y * SCALE
+                    pygame.draw.aaline(self.display, 'dark grey', (dx, dy), (x * SCALE, y * SCALE))
+                x_off += NOISE_RES
+            y_off += NOISE_RES
+        self.z_off += Z_INCREMENT
 
-    def draw_particles(self):
-        """ Updating particle kinematics and displaying particles on screen """
-        for particle in self.particles:
-            particle.update()
-            particle.follow(self.flowfield)
-            if show_particles:
-                pygame.draw.rect(self.display, "white", (int(particle.pos.x), int(particle.pos.y), particle_radius, particle_radius))
+    def update_particles(self):
+        '''Update and draw particles'''
+        for p in self.particles:
+            p.update(DIMENSIONS)
+            p.follow(self.flowfield, SCALE, COLS)
+            if SHOW_PARTICLES:
+                pygame.draw.rect(self.display, 'white', (int(p.pos.x), int(p.pos.y), PARTICLE_RADIUS, PARTICLE_RADIUS))
 
     def run(self):
-        """ Main program loop controling updating display, flowfield and particles """
-        os.makedirs("images/", exist_ok=True)
-        step = 1
+        '''Main simulation loop'''
+        os.makedirs('images/', exist_ok=True)
+        
         while True:
-            pygame.display.set_caption('Perlin Noise Flow Field     Step: {}     Time: {}'.format(str(step), round(time.time() - self.start_time, 2)))
-            self.display.fill("black")
-            self.perlin_noise()
-            self.draw_particles()
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    pygame.quit(); sys.exit();
-            pygame.display.update()
-            pygame.image.save(self.display, "images/{}.jpg".format(step))
-            step += 1
+                    pygame.quit()
 
-if __name__ == "__main__":
+            # Render frame
+            self.display.fill('black')
+            self.perlin_noise()
+            self.update_particles()
+            
+            # Handle events
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+            
+            # Update display and save frame
+            pygame.display.update()
+
+if __name__ == '__main__':
     pygame.init()
-    window = Display()
+    Display().run()
