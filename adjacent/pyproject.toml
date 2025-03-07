@@ -1,0 +1,16 @@
+[build-system]
+requires = ['hatchling']
+build-backend = 'hatchling.build'
+
+[project]
+name = 'adjacent'
+dynamic = ['version']
+readme = 'README.md'
+authors = [{name = 'Fraser Love', email = 'me@fraser.love'}]
+dependencies = [
+    'networkx~=3.4.0',
+]
+requires-python = '>=3.10'
+
+[tool.hatch.version]
+path = 'adjacent/__init__.py'

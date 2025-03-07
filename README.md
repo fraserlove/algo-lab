@@ -1,7 +1,5 @@
-# Algorithms, Simulations and Generators Python Lab
-A collection of algorithms, simulations, generators, utilities and mathematical scripts written in Python. Included are scripts ranging from N-body and flow field simulations to polynomial interpolation and Monte Carlo simulations.
-
-![alt text](assets/flow_field.png)
+# PyLab
+A collection of experiments written in Python.
 
 ## Installation and Usage
 Setup your environment and install the required dependencies as follows:
@@ -31,7 +29,3 @@ python nbody.py
 
 ## Screenshots
 ![alt text](assets/flow_field.png)
-![alt text](assets/fractal_trees.png)
-![alt text](assets/gravity_simulator.jpg)
-![alt text](assets/sorting_algorithms.png)
-![alt text](assets/terrain_generator.png)
