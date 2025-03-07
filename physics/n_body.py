@@ -43,7 +43,7 @@ class NBody:
         az = G * (dz * inv_r3) @ self.mass
         
         return np.hstack((ax, ay, az))
-	
+    
     def centre_of_mass(self) -> np.ndarray:
         '''Calculate the centre of mass of the system.'''
         return np.mean(self.mass * self.pos, 0)
@@ -72,37 +72,37 @@ class NBody:
         self.acc = self.get_acceleration()
         self.vel += self.acc * self.dt / 2.0
         self.t += self.dt
-		
+        
 def draw_particles(screen: pygame.Surface, positions: np.ndarray) -> None:
-	'''Draw particles on the screen.'''
-	for p in range(len(positions)):
-		# Scale positions to screen coordinates
-		x = int(screen.get_width() / 2 + positions[p, 0] * (screen.get_width() / 4))
-		y = int(screen.get_height() / 2 + positions[p, 1] * (screen.get_height() / 4))
-		
-		# Only draw if within simulation area
-		if 0 <= x < screen.get_width() and 0 <= y < screen.get_height():
-			# Semi-transparent white color (RGBA with alpha=180)
-			pygame.gfxdraw.pixel(screen, x, y, (255, 255, 225, 180))
+    '''Draw particles on the screen.'''
+    for p in range(len(positions)):
+        # Scale positions to screen coordinates
+        x = int(screen.get_width() / 2 + positions[p, 0] * (screen.get_width() / 4))
+        y = int(screen.get_height() / 2 + positions[p, 1] * (screen.get_height() / 4))
+        
+        # Only draw if within simulation area
+        if 0 <= x < screen.get_width() and 0 <= y < screen.get_height():
+            # Semi-transparent white color (RGBA with alpha=180)
+            pygame.gfxdraw.pixel(screen, x, y, (255, 255, 225, 180))
 
 def main() -> None:
-	pygame.init()
-	screen = pygame.display.set_mode((600, 600))
-	pygame.display.set_caption('N-body')
+    pygame.init()
+    screen = pygame.display.set_mode((600, 600))
+    pygame.display.set_caption('N-body')
     
-	sim = NBody(n=2500, total_mass=4e11, dt=1e-3)
-	
-	while True:
-		for event in pygame.event.get():
-			if event.type == pygame.QUIT:
-				pygame.quit()
-				return
-		
-		sim.step()
-		
-		screen.fill('black')
-		draw_particles(screen, sim.pos)		
-		pygame.display.flip()
+    sim = NBody(n=2500, total_mass=4e11, dt=1e-3)
+    
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                return
+        
+        sim.step()
+        
+        screen.fill('black')
+        draw_particles(screen, sim.pos)        
+        pygame.display.flip()
 
 if __name__ == '__main__':
-	main()
+    main()
