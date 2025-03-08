@@ -21,7 +21,7 @@ class NBody:
         self.vel = np.random.randn(n, 3)
         
         # Center of mass correction, remove mean velocity
-        self.vel -= np.mean(self.mass * self.vel, 0) / np.mean(self.mass)
+        self.vel -= self.centre_of_mass()
         
         # Initial acceleration
         self.acc = self.get_acceleration()
@@ -46,7 +46,7 @@ class NBody:
     
     def centre_of_mass(self) -> np.ndarray:
         '''Calculate the centre of mass of the system.'''
-        return np.mean(self.mass * self.pos, 0)
+        return np.mean(self.mass * self.pos, 0) / np.mean(self.mass)
     
     def get_energy(self) -> Tuple[float, float]:
         '''Get kinetic energy (KE) and potential energy (PE) of simulation.'''
@@ -100,7 +100,7 @@ def main() -> None:
         sim.step()
         
         display.fill('black')
-        draw_particles(display, sim.pos)        
+        draw_particles(display, sim.pos)
         pygame.display.flip()
 
 if __name__ == '__main__':

@@ -11,12 +11,14 @@ import pygame.gfxdraw
 D = 5e-2 # Damping (drag) factor
 
 class FlowField:
-    def __init__(self, n: int = 1, field_size: Tuple[int, int] = (1, 1), dt: float = 4e-2):
+    def __init__(self, n: int = 1, field_size: Tuple[int, int] = (1, 1), noise_res: float = 2e-2, octaves: int = 10, dt: float = 4e-2):
         self.t = 0
         self.dt = dt
 
         self.rows = field_size[0]
         self.cols = field_size[1]
+        self.noise_res = noise_res
+        self.octaves = octaves
         
         # Initialise vectors
         self.vectors = np.zeros((self.rows, self.cols, 2))
@@ -30,9 +32,18 @@ class FlowField:
         self.get_acceleration()
 
     def get_acceleration(self) -> np.ndarray:
-        '''Calculate the acceleration on each particle.'''
+        '''Calculate the acceleration on each particle. Vector lookup from noise field.'''
 
-        self.update_vectors()
+        # Create coordinate grids
+        xs = np.arange(self.rows) * self.noise_res
+        ys = np.arange(self.cols) * self.noise_res
+        
+        # Generate vectors from 3D perlin noise
+        for row, x_off in enumerate(xs):
+            for col, y_off in enumerate(ys):
+                theta = noise.pnoise3(x_off, y_off, self.t, self.octaves) * 4 * np.pi
+                self.vectors[row, col, 0] = np.cos(theta)
+                self.vectors[row, col, 1] = np.sin(theta)
 
         # Convert positions to grid indices
         rows = np.floor(self.pos[:, 0] * self.rows).astype(int)
@@ -40,19 +51,6 @@ class FlowField:
 
         # Vectorised lookup of flow vectors for each particle
         return self.vectors[rows, cols]
-    
-    def update_vectors(self, noise_res: float = 2e-2, octaves: int = 10) -> None:
-        '''Generate 3D perlin noise and store as vectors in flowfield.'''
-        # Create coordinate grids
-        xs = np.arange(self.rows) * noise_res
-        ys = np.arange(self.cols) * noise_res
-        
-        # Generate vectors from noise
-        for row, x_off in enumerate(xs):
-            for col, y_off in enumerate(ys):
-                perlin = noise.pnoise3(x_off, y_off, self.t, octaves) * 4 * np.pi
-                self.vectors[row, col, 0] = np.cos(perlin)
-                self.vectors[row, col, 1] = np.sin(perlin)
     
     def step(self) -> None:
         '''Perform one step of the Leapfrog integration.'''
