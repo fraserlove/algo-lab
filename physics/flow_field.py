@@ -1,95 +1,94 @@
 import os
-import math
 import noise
-import random
 import numpy as np
+from typing import Tuple
 
 os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = '1'
 
 import pygame
 import pygame.gfxdraw
 
-class Particle:
-    def __init__(self, pos, bounds, drag_coef=5e-2):
-        self.pos = np.array(pos, dtype=float)
-        self.vel = np.zeros(2, dtype=float)
-        self.acc = np.zeros(2, dtype=float)
-        self.drag_coef = drag_coef
-        self.bounds = np.array(bounds)
-
-    def update(self, flowfield):
-        ''' Updating the particle's position, velocity and acceleration '''
-        self.vel += self.acc
-        self.vel *= (1 - self.drag_coef)
-        self.pos += self.vel
-        self.pos = np.mod(self.pos, self.bounds)  # Wrap around the screen
-        # Find the flowfield vector the particle lies on and apply the force
-        self.acc = flowfield.nearest_vector(self.pos[0], self.pos[1])
+D = 5e-2 # Damping (drag) factor
 
 class FlowField:
-    def __init__(self, size, resolution=10, n_particles=20000, drag_coef=5e-2):
+    def __init__(self, n: int = 1, field_size: Tuple[int, int] = (1, 1), dt: float = 4e-2):
         self.t = 0
-        self.resolution = resolution
-        self.size = np.array(size)
-        self.rows = size[1] // resolution
-        self.cols = size[0] // resolution
-        
-        # Initialize vectors as 3D array: [rows, cols, 2]
-        self.vectors = np.zeros((self.rows, self.cols, 2), dtype=float)
-        
-        # Create particles with random positions
-        self.particles = []
-        for _ in range(n_particles):
-            random_pos = np.array([random.randint(0, size[0]), random.randint(0, size[1])])
-            self.particles.append(Particle(random_pos, size, drag_coef))
+        self.dt = dt
 
-    def nearest_vector(self, x, y):
-        '''Get the nearest vector to the given coordinates.'''
-        col = int(x // self.resolution)
-        row = int(y // self.resolution)
-        return self.vectors[row, col]
-    
-    def update_vectors(self, noise_res=1e-2, dt=1e-2, octaves=4):
-        '''Generate 3D perlin noise and store as vectors in flowfield'''
-        # Create coordinate grids
-        y_coords = np.arange(self.rows) * noise_res
-        x_coords = np.arange(self.cols) * noise_res
+        self.rows = field_size[0]
+        self.cols = field_size[1]
         
-        # For Perlin noise, we still need to iterate as noise library doesn't support vectorization
-        for row, y_off in enumerate(y_coords):
-            for col, x_off in enumerate(x_coords):
-                perlin = noise.pnoise3(x_off, y_off, self.t, octaves) * 4 * math.pi
-                self.vectors[row, col, 0] = math.cos(perlin)
-                self.vectors[row, col, 1] = math.sin(perlin)
-                
-        self.t += dt
+        # Initialise vectors
+        self.vectors = np.zeros((self.rows, self.cols, 2))
         
-    def update(self):
-        '''Update the flow field and particles'''
+        # Initialise particles
+        self.pos = np.random.rand(n, 2)
+        self.vel = np.zeros((n, 2))
+        self.acc = np.zeros((n, 2))
+        
+        # Get initial acceleration
+        self.get_acceleration()
+
+    def get_acceleration(self) -> np.ndarray:
+        '''Calculate the acceleration on each particle.'''
+
         self.update_vectors()
-        for particle in self.particles:
-            particle.update(self)
 
-def draw_vectors(display, flow_field):
+        # Convert positions to grid indices
+        rows = np.floor(self.pos[:, 0] * self.rows).astype(int)
+        cols = np.floor(self.pos[:, 1] * self.cols).astype(int)
+
+        # Vectorised lookup of flow vectors for each particle
+        return self.vectors[rows, cols]
+    
+    def update_vectors(self, noise_res: float = 2e-2, octaves: int = 10) -> None:
+        '''Generate 3D perlin noise and store as vectors in flowfield.'''
+        # Create coordinate grids
+        xs = np.arange(self.rows) * noise_res
+        ys = np.arange(self.cols) * noise_res
+        
+        # Generate vectors from noise
+        for row, x_off in enumerate(xs):
+            for col, y_off in enumerate(ys):
+                perlin = noise.pnoise3(x_off, y_off, self.t, octaves) * 4 * np.pi
+                self.vectors[row, col, 0] = np.cos(perlin)
+                self.vectors[row, col, 1] = np.sin(perlin)
+    
+    def step(self) -> None:
+        '''Perform one step of the Leapfrog integration.'''
+        self.vel += self.acc * self.dt / 2.0
+        self.pos += self.vel * self.dt
+        self.pos = np.mod(self.pos, 1.0) # Keep in [0,1] range
+        self.acc = self.get_acceleration()
+        self.vel += self.acc * self.dt / 2.0
+        self.vel *= (1 - D)
+        self.t += self.dt
+
+def draw_particles(display: pygame.Surface, positions: np.ndarray) -> None:
+    '''Draw the particles on the display.'''
+    for i in range(len(positions)):
+        # Scale positions to display coordinates
+        x = int(positions[i, 0] * display.get_width())
+        y = int(positions[i, 1] * display.get_height())
+        pygame.gfxdraw.pixel(display, x, y, (255, 255, 255, 70))
+
+def draw_vectors(display: pygame.Surface, vectors: np.ndarray) -> None:
     '''Draw the flow field vectors.'''
-    for y in range(flow_field.rows):
-        for x in range(flow_field.cols):
-            vector = flow_field.vectors[y, x]
-            start = (x * flow_field.resolution, y * flow_field.resolution)
-            end = ((x + vector[0]) * flow_field.resolution, (y + vector[1]) * flow_field.resolution)
-            pygame.draw.aaline(display, 'dark grey', end, start)
+    for x in range(vectors.shape[0]):
+        for y in range(vectors.shape[1]):
+            vector = vectors[x, y]
+            x_scale = display.get_width() / vectors.shape[0]
+            y_scale = display.get_height() / vectors.shape[1]
+            start = (x * x_scale, y * y_scale)
+            end = ((x + vector[0]) * x_scale, (y + vector[1]) * y_scale)
+            pygame.draw.aaline(display, (40, 40, 40), end, start)
 
-def draw_particles(display, particles):
-    '''Draw the particles.'''
-    for p in particles:
-        pygame.gfxdraw.pixel(display, int(p.pos[0]), int(p.pos[1]), (255, 255, 255, 200))
-
-def main():
+def main() -> None:
     pygame.init()
     display = pygame.display.set_mode((600, 600))
     pygame.display.set_caption('Flow Field')
 
-    flow_field = FlowField((600, 600))
+    sim = FlowField(n = 100000, field_size = (75, 75))
     
     while True:
         for event in pygame.event.get():
@@ -97,13 +96,12 @@ def main():
                 pygame.quit()
                 return
         
-        display.fill('black')
+        sim.step()
 
-        flow_field.update()
-        draw_vectors(display, flow_field)
-        draw_particles(display, flow_field.particles)
-        
-        pygame.display.update()
+        display.fill('black')
+        draw_vectors(display, sim.vectors)
+        draw_particles(display, sim.pos)
+        pygame.display.flip()
 
 if __name__ == '__main__':
     main()

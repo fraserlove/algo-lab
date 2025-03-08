@@ -11,7 +11,7 @@ G = 6.674e-11 # Gravitational constant
 D = 0.1 # Damping factor
 
 class NBody:
-    def __init__(self, n = 1, total_mass = 1, dt = 1e-3):
+    def __init__(self, n: int = 1, total_mass: float = 1, dt: float = 1e-3):
         self.t = 0
         self.dt = dt
         
@@ -73,21 +73,20 @@ class NBody:
         self.vel += self.acc * self.dt / 2.0
         self.t += self.dt
         
-def draw_particles(screen: pygame.Surface, positions: np.ndarray) -> None:
-    '''Draw particles on the screen.'''
+def draw_particles(display: pygame.Surface, positions: np.ndarray) -> None:
+    '''Draw particles on the display.'''
     for p in range(len(positions)):
-        # Scale positions to screen coordinates
-        x = int(screen.get_width() / 2 + positions[p, 0] * (screen.get_width() / 4))
-        y = int(screen.get_height() / 2 + positions[p, 1] * (screen.get_height() / 4))
+        # Scale positions to display coordinates
+        x = int(display.get_width() / 2 + positions[p, 0] * (display.get_width() / 4))
+        y = int(display.get_height() / 2 + positions[p, 1] * (display.get_height() / 4))
         
         # Only draw if within simulation area
-        if 0 <= x < screen.get_width() and 0 <= y < screen.get_height():
-            # Semi-transparent white color (RGBA with alpha=180)
-            pygame.gfxdraw.pixel(screen, x, y, (255, 255, 225, 180))
+        if 0 <= x < display.get_width() and 0 <= y < display.get_height():
+            pygame.gfxdraw.pixel(display, x, y, (255, 255, 255, 180))
 
 def main() -> None:
     pygame.init()
-    screen = pygame.display.set_mode((600, 600))
+    display = pygame.display.set_mode((600, 600))
     pygame.display.set_caption('N-body')
     
     sim = NBody(n=2500, total_mass=4e11, dt=1e-3)
@@ -100,8 +99,8 @@ def main() -> None:
         
         sim.step()
         
-        screen.fill('black')
-        draw_particles(screen, sim.pos)        
+        display.fill('black')
+        draw_particles(display, sim.pos)        
         pygame.display.flip()
 
 if __name__ == '__main__':
