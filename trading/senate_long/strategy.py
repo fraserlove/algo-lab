@@ -1,4 +1,4 @@
-import argparse
+import typer
 import keyring
 import datetime
 import time
@@ -155,14 +155,17 @@ class Strategy:
             self.next_rebalance = self.clock.next_open
     
 
-if __name__ == '__main__':
+app = typer.Typer()
 
-    parser = argparse.ArgumentParser(description='Run the senate long strategy with optional arguments.')
-    parser.add_argument('--live', default=False, action=argparse.BooleanOptionalAction, help='Trade with live funds or a paper account.')
-    parser.add_argument('--position_length', default=60, type=int, help='Number of days to hold a trade.')
-    parser.add_argument('--rebalance_frequency', default=7, type=int, help='Number of days to wait between rebalancing.')
-
-    args = parser.parse_args()
-    
-    senate_long = Strategy(args.live, args.position_length, args.rebalance_frequency)
+@app.command()
+def run(
+    live: bool = typer.Option(False, help='Trade with live funds or a paper account.'),
+    position_length: int = typer.Option(60, help='Number of days to hold a trade.'),
+    rebalance_frequency: int = typer.Option(7, help='Number of days to wait between rebalancing.')
+):
+    '''Run the senate long strategy with optional arguments.'''
+    senate_long = Strategy(live, position_length, rebalance_frequency)
     senate_long.run()
+
+if __name__ == '__main__':
+    app()

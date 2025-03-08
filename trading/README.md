@@ -19,8 +19,8 @@ Setup your environment and install the required dependencies as follows:
 
 1. **Clone the Repository:**
 ```bash
-git clone https://github.com/fraserlove/algo-lab.git
-cd algo-lab/algorithmic-trading
+git clone https://github.com/fraserlove/pylab.git
+cd pylab/trading
 ```
 
 2. **Create a Python Virtual Environment:**
@@ -39,5 +39,5 @@ pip install -r requirements.txt
 
 Ensure you pass in the parameters for the strategy you want to change as command line arguments. These can be found by entering `-h` or `--help` after the entering the Python file name of strategy you want to run. An example is given below.
 ``` bash
-python sentate_long/strategy.py --live --position_length 60 --rebalance_frequency 7
+python senate_long/strategy.py --live --position_length 60 --rebalance_frequency 7
 ```
